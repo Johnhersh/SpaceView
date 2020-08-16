@@ -1,5 +1,5 @@
-import React, { useRef } from "react";
-import { Canvas, useFrame } from "react-three-fiber";
+import React from "react";
+import { Canvas } from "react-three-fiber";
 import { Vector3 } from "three";
 import { softShadows, OrbitControls } from "drei";
 import PlanetMesh from "../3d/PlanetMesh";
