@@ -1,6 +1,8 @@
 import React, { useRef } from "react";
 import { useFrame } from "react-three-fiber";
 
+import PlanetMaterial from "./PlanetMaterial";
+
 interface SpinningMeshProps {
   position: THREE.Vector3;
 }
@@ -20,6 +22,7 @@ const PlanetMesh = ({ position }: SpinningMeshProps) => {
       {/* <boxBufferGeometry attach="geometry" args={[1, 2, 1]} /> */}
       <sphereBufferGeometry attach="geometry" args={[radius, segments, segments]} />
       <meshStandardMaterial attach="material" color="lightblue" />
+      <PlanetMaterial />
     </mesh>
   );
 };
