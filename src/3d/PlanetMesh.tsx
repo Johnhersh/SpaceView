@@ -11,14 +11,9 @@ interface SpinningMeshProps {
 }
 
 const PlanetMesh = ({ position }: SpinningMeshProps) => {
-  console.log("Loading!");
   const mesh = useRef<THREE.Mesh>();
-  const texture1 = useLoader(TGALoader, noiseTex);
-  const test = texture1;
-  console.log(texture1);
-  if (test) {
-    console.log(test);
-  }
+  const texture = useLoader(TGALoader, noiseTex);
+
   const radius = 1;
   const segments = 8;
 
@@ -30,8 +25,7 @@ const PlanetMesh = ({ position }: SpinningMeshProps) => {
   return (
     <mesh castShadow ref={mesh} position={position}>
       <sphereBufferGeometry attach="geometry" args={[radius, segments, segments]} />
-      <meshStandardMaterial attach="material" color="lightblue" />
-      <PlanetMaterial />
+      <PlanetMaterial diffuse={texture} />
     </mesh>
   );
 };
