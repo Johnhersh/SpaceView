@@ -1,7 +1,7 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { Canvas } from "react-three-fiber";
 import { Vector3 } from "three";
-import { softShadows, OrbitControls } from "drei";
+import { softShadows, OrbitControls, Html } from "drei";
 import PlanetMesh from "../3d/PlanetMesh";
 
 softShadows({
@@ -37,9 +37,11 @@ function HomePage() {
             <shadowMaterial attach="material" opacity={0.3} />
           </mesh>
         </group>
-        <PlanetMesh position={new Vector3(0, 1, 0)} />
-        <PlanetMesh position={new Vector3(-2, 1, -5)} />
-        <PlanetMesh position={new Vector3(5, 1, -2)} />
+        <Suspense fallback={<Html>Loading</Html>}>
+          <PlanetMesh position={new Vector3(0, 1, 0)} />
+          <PlanetMesh position={new Vector3(-2, 1, -5)} />
+          <PlanetMesh position={new Vector3(5, 1, -2)} />
+        </Suspense>
         <OrbitControls />
       </Canvas>
     </>

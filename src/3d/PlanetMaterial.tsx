@@ -21,7 +21,7 @@ export default function PlanetMaterial() {
       fragmentShader,
       vertexShader,
     }),
-    []
+    [vertexShader, fragmentShader]
   );
 
   return <shaderMaterial attach="material" {...data} />;
