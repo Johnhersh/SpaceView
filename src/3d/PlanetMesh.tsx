@@ -14,12 +14,12 @@ const PlanetMesh = ({ position }: SpinningMeshProps) => {
   const mesh = useRef<THREE.Mesh>();
   const texture = useLoader(TGALoader, noiseTex);
 
-  const radius = 1;
-  const segments = 8;
+  const radius = 2;
+  const segments = 32;
 
   useFrame(() => {
     if (mesh.current !== undefined) {
-      mesh.current.rotation.x = mesh.current.rotation.y += 0.01;
+      mesh.current.rotation.y = mesh.current.rotation.y += 0.01;
     }
   });
   return (
