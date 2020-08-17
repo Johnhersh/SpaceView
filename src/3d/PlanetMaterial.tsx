@@ -33,7 +33,7 @@ export default function PlanetMaterial({ diffuse }: PlanetMaterialProps) {
       fragmentShader,
       vertexShader,
     }),
-    [vertexShader, fragmentShader]
+    [vertexShader, fragmentShader, diffuse]
   );
 
   return <shaderMaterial attach="material" {...data} />;
