@@ -50,7 +50,7 @@ function HomePage() {
         </Canvas>
       </div>
       <div className="settingsContainer">
-        <h1>JOHN HERSHBERG</h1>
+        <h1>Settings</h1>
         <div className="sliderContainer">
           <RangeSlider value={10} />
         </div>
