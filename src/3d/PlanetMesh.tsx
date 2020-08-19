@@ -8,9 +8,10 @@ import noiseTex from "./textures/noise.tga";
 
 interface SpinningMeshProps {
   position: THREE.Vector3;
+  dissolveAmount: number;
 }
 
-const PlanetMesh = ({ position }: SpinningMeshProps) => {
+const PlanetMesh = ({ position, dissolveAmount }: SpinningMeshProps) => {
   const mesh = useRef<THREE.Mesh>();
   const texture = useLoader(TGALoader, noiseTex);
 
@@ -25,7 +26,7 @@ const PlanetMesh = ({ position }: SpinningMeshProps) => {
   return (
     <mesh castShadow ref={mesh} position={position}>
       <sphereBufferGeometry attach="geometry" args={[radius, segments, segments]} />
-      <PlanetMaterial diffuse={texture} />
+      <PlanetMaterial diffuse={texture} dissolveAmount={dissolveAmount} />
     </mesh>
   );
 };

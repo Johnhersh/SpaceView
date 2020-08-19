@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useState } from "react";
 import "./homepage.styles.scss";
 import { Canvas } from "react-three-fiber";
 import { Vector3 } from "three";
@@ -16,6 +16,8 @@ softShadows({
 });
 
 function HomePage() {
+  const [dissolveAmount, setDissolveAmount] = useState(0);
+
   return (
     <div className="homepageContainer">
       <div className="canvasContainer">
@@ -42,9 +44,9 @@ function HomePage() {
             </mesh>
           </group>
           <Suspense fallback={<Html>Loading</Html>}>
-            <PlanetMesh position={new Vector3(0, 1, 0)} />
-            <PlanetMesh position={new Vector3(-2, 1, -5)} />
-            <PlanetMesh position={new Vector3(5, 1, -2)} />
+            <PlanetMesh position={new Vector3(0, 1, 0)} dissolveAmount={dissolveAmount} />
+            <PlanetMesh position={new Vector3(-2, 1, -5)} dissolveAmount={dissolveAmount} />
+            <PlanetMesh position={new Vector3(5, 1, -2)} dissolveAmount={dissolveAmount} />
           </Suspense>
           <OrbitControls />
         </Canvas>
@@ -52,7 +54,10 @@ function HomePage() {
       <div className="settingsContainer">
         <h1>Settings</h1>
         <div className="sliderContainer">
-          <RangeSlider value={10} />
+          <RangeSlider
+            value={dissolveAmount}
+            onChange={(changeEvent: any) => setDissolveAmount(changeEvent.target.value)}
+          />
         </div>
       </div>
     </div>

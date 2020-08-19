@@ -1,5 +1,6 @@
-import React, { useMemo } from "react";
-import { Vector4, Texture, NormalBlending } from "three";
+import React, { useMemo, useRef } from "react";
+import { Vector4, Texture, NormalBlending, ShaderMaterial } from "three";
+import { useFrame } from "react-three-fiber";
 
 const vertexShader = `
 // Set the precision for data types used in this shader
@@ -39,23 +40,39 @@ void main() {
 
 interface PlanetMaterialProps {
   diffuse: Texture;
+  dissolveAmount: number;
 }
 
-export default function PlanetMaterial({ diffuse }: PlanetMaterialProps) {
-  const data = useMemo(
+export default function PlanetMaterial({ diffuse, dissolveAmount }: PlanetMaterialProps) {
+  const material = useRef<typeof ShaderMaterial>(null);
+  const uniforms = useMemo(
     () => ({
-      uniforms: {
-        color: { value: new Vector4(0.0, 0.0, 1.0, 1.0) },
-        tDiffuse: { value: diffuse },
-        dissolveAmount: { value: 0.5 },
-      },
-      fragmentShader,
-      vertexShader,
+      color: { value: new Vector4(0.0, 0.0, 1.0, 1.0) },
+      tDiffuse: { value: diffuse },
+      dissolveAmount: { value: dissolveAmount },
     }),
-    [diffuse]
+    [diffuse, dissolveAmount]
   );
 
+  useFrame(() => {
+    if (material.current !== (undefined || null)) {
+      uniforms.dissolveAmount = { value: dissolveAmount / 100 };
+    }
+  });
+
   return (
-    <shaderMaterial blending={NormalBlending} transparent={true} attach="material" {...data} />
+    <shaderMaterial
+      ref={material}
+      blending={NormalBlending}
+      transparent={true}
+      attach="material"
+      args={[
+        {
+          uniforms,
+          vertexShader: vertexShader,
+          fragmentShader: fragmentShader,
+        },
+      ]}
+    />
   );
 }
