@@ -22,7 +22,6 @@ softShadows({
 
 function HomePage() {
   const [dissolveAmount, setDissolveAmount] = useState(0);
-  // let _test = "a";
 
   return (
     <div className="homepageContainer">
