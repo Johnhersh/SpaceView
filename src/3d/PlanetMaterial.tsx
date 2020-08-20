@@ -26,7 +26,6 @@ uniform float dissolveAmount;
 
 void main() {
     vec2 uv = vUv;
-    uv.y = 1.0 - uv.y;
     float softness = 0.5;
     float scaleAndOffset = (dissolveAmount * softness) + dissolveAmount;
     float minValue = scaleAndOffset - softness;
