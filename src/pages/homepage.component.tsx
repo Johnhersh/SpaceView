@@ -6,11 +6,11 @@ import { softShadows, OrbitControls, Html } from "drei";
 import RangeSlider from "react-bootstrap-range-slider";
 
 import PlanetMesh from "../3d/PlanetMesh";
-import mercuryTexture from "../3d/textures/Mercury_Diffuse.tga";
-import venusTexture from "../3d/textures/Venus_Diffuse.tga";
-import marsTexture from "../3d/textures/Mars_Diffuse.tga";
-import earthTexture from "../3d/textures/Earth_Diffuse.tga";
-import jupiterTexture from "../3d/textures/Jupiter_Diffuse.tga";
+import mercuryTexture from "../3d/textures/Mercury_Diffuse.png";
+import venusTexture from "../3d/textures/Venus_Diffuse.png";
+import marsTexture from "../3d/textures/Mars_Diffuse.png";
+import earthTexture from "../3d/textures/Earth_Diffuse.png";
+import jupiterTexture from "../3d/textures/Jupiter_Diffuse.png";
 
 softShadows({
   frustrum: 3.75, // Frustrum width (default: 3.75)
@@ -26,7 +26,7 @@ function HomePage() {
   return (
     <div className="homepageContainer">
       <div className="canvasContainer">
-        <Canvas colorManagement camera={{ position: [-5, 2, 10], fov: 60 }} shadowMap>
+        <Canvas colorManagement={true} camera={{ position: [-5, 2, 10], fov: 60 }} shadowMap>
           <ambientLight intensity={0.3} />
           <directionalLight
             castShadow

@@ -1,6 +1,6 @@
+import * as THREE from "three";
 import React, { useRef } from "react";
 import { useFrame, useLoader } from "react-three-fiber";
-import { TGALoader } from "three/examples/jsm/loaders/TGALoader";
 
 import PlanetMaterial from "./PlanetMaterial";
 
@@ -13,7 +13,8 @@ interface SpinningMeshProps {
 
 const PlanetMesh = ({ position, dissolveAmount, texturePath, size }: SpinningMeshProps) => {
   const mesh = useRef<THREE.Mesh>();
-  const texture = useLoader(TGALoader, texturePath);
+  const texture = useLoader(THREE.TextureLoader, texturePath);
+  texture.minFilter = THREE.LinearFilter;
 
   const radius = size;
   const segments = 32;
