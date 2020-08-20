@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from "react";
+import React, { useRef } from "react";
 import { Texture, NormalBlending, ShaderMaterial } from "three";
 import { useFrame } from "react-three-fiber";
 
@@ -44,13 +44,11 @@ interface PlanetMaterialProps {
 
 export default function PlanetMaterial({ diffuse, dissolveAmount }: PlanetMaterialProps) {
   const material = useRef<typeof ShaderMaterial>(null);
-  const uniforms = useMemo(
-    () => ({
-      tDiffuse: { value: diffuse },
-      dissolveAmount: { value: dissolveAmount },
-    }),
-    [diffuse, dissolveAmount]
-  );
+
+  const uniforms = {
+    tDiffuse: { value: diffuse },
+    dissolveAmount: { value: dissolveAmount },
+  };
 
   useFrame(() => {
     if (material.current !== (undefined || null)) {
