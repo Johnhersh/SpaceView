@@ -6,6 +6,11 @@ import { softShadows, OrbitControls, Html } from "drei";
 import RangeSlider from "react-bootstrap-range-slider";
 
 import PlanetMesh from "../3d/PlanetMesh";
+import mercuryTexture from "../3d/textures/Mercury_Diffuse.tga";
+import venusTexture from "../3d/textures/Venus_Diffuse.tga";
+import marsTexture from "../3d/textures/Mars_Diffuse.tga";
+import earthTexture from "../3d/textures/Earth_Diffuse.tga";
+import jupiterTexture from "../3d/textures/Jupiter_Diffuse.tga";
 
 softShadows({
   frustrum: 3.75, // Frustrum width (default: 3.75)
@@ -17,6 +22,7 @@ softShadows({
 
 function HomePage() {
   const [dissolveAmount, setDissolveAmount] = useState(0);
+  // let _test = "a";
 
   return (
     <div className="homepageContainer">
@@ -31,7 +37,7 @@ function HomePage() {
             shadow-mapSize-height={2048}
             shadow-camera-far={50}
             shadow-camera-left={-10}
-            shadow-camera-right={10}
+            shadow-camera-right={50}
             shadow-camera-top={10}
             shadow-camera-bottom={-10}
           />
@@ -39,14 +45,41 @@ function HomePage() {
           <pointLight position={[0, -10, 0]} intensity={1.5} />
           <group>
             <mesh receiveShadow rotation={[-Math.PI / 2, 0, 0]} position={[0, -5, 35]}>
-              <planeBufferGeometry attach="geometry" args={[100, 100]} />
+              <planeBufferGeometry attach="geometry" args={[500, 500]} />
               <shadowMaterial attach="material" opacity={0.3} />
             </mesh>
           </group>
           <Suspense fallback={<Html>Loading</Html>}>
-            <PlanetMesh position={new Vector3(0, 1, 0)} dissolveAmount={dissolveAmount} />
-            <PlanetMesh position={new Vector3(-2, 1, -5)} dissolveAmount={dissolveAmount} />
-            <PlanetMesh position={new Vector3(5, 1, -2)} dissolveAmount={dissolveAmount} />
+            <PlanetMesh
+              position={new Vector3(0, 0, 0)}
+              dissolveAmount={dissolveAmount}
+              texturePath={mercuryTexture}
+              size={0.5}
+            />
+            <PlanetMesh
+              position={new Vector3(5, 0, 0)}
+              dissolveAmount={dissolveAmount}
+              texturePath={venusTexture}
+              size={1}
+            />
+            <PlanetMesh
+              position={new Vector3(10, 0, 0)}
+              dissolveAmount={dissolveAmount}
+              texturePath={earthTexture}
+              size={1}
+            />
+            <PlanetMesh
+              position={new Vector3(15, 0, 0)}
+              dissolveAmount={dissolveAmount}
+              texturePath={marsTexture}
+              size={0.75}
+            />
+            <PlanetMesh
+              position={new Vector3(20, 0, 0)}
+              dissolveAmount={dissolveAmount}
+              texturePath={jupiterTexture}
+              size={1.5}
+            />
           </Suspense>
           <OrbitControls />
         </Canvas>

@@ -4,18 +4,18 @@ import { TGALoader } from "three/examples/jsm/loaders/TGALoader";
 
 import PlanetMaterial from "./PlanetMaterial";
 
-import noiseTex from "./textures/noise.tga";
-
 interface SpinningMeshProps {
   position: THREE.Vector3;
   dissolveAmount: number;
+  texturePath: any;
+  size: number;
 }
 
-const PlanetMesh = ({ position, dissolveAmount }: SpinningMeshProps) => {
+const PlanetMesh = ({ position, dissolveAmount, texturePath, size }: SpinningMeshProps) => {
   const mesh = useRef<THREE.Mesh>();
-  const texture = useLoader(TGALoader, noiseTex);
+  const texture = useLoader(TGALoader, texturePath);
 
-  const radius = 2;
+  const radius = size;
   const segments = 32;
 
   useFrame(() => {

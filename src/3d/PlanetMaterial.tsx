@@ -1,5 +1,5 @@
 import React, { useMemo, useRef } from "react";
-import { Vector4, Texture, NormalBlending, ShaderMaterial } from "three";
+import { Texture, NormalBlending, ShaderMaterial } from "three";
 import { useFrame } from "react-three-fiber";
 
 const vertexShader = `
@@ -21,19 +21,19 @@ precision highp float;
 precision highp int;
 
 varying vec2 vUv;
-uniform vec3 color;
 uniform sampler2D tDiffuse;
 uniform float dissolveAmount;
 
 void main() {
     vec2 uv = vUv;
+    uv.y = 1.0 - uv.y;
     float softness = 0.5;
     float scaleAndOffset = (dissolveAmount * softness) + dissolveAmount;
     float minValue = scaleAndOffset - softness;
     float maxValue = scaleAndOffset;
     vec4 tex = texture2D(tDiffuse, uv);
     float dissolve = smoothstep(minValue, maxValue, tex.r);
-    vec4 finalColor = vec4(color * tex.rgb, dissolve);
+    vec4 finalColor = vec4(tex.rgb, dissolve);
     gl_FragColor = vec4( finalColor );
 }
 `;
@@ -47,7 +47,6 @@ export default function PlanetMaterial({ diffuse, dissolveAmount }: PlanetMateri
   const material = useRef<typeof ShaderMaterial>(null);
   const uniforms = useMemo(
     () => ({
-      color: { value: new Vector4(0.0, 0.0, 1.0, 1.0) },
       tDiffuse: { value: diffuse },
       dissolveAmount: { value: dissolveAmount },
     }),
