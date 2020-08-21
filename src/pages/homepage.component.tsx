@@ -80,7 +80,7 @@ function HomePage() {
               );
             })}
           </Suspense>
-          <OrbitControls />
+          <OrbitControls enablePan={false} maxDistance={10} minDistance={2} />
         </Canvas>
       </div>
       <div className="settingsContainer">
