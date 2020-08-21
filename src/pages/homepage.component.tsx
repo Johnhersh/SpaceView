@@ -5,6 +5,7 @@ import { Vector3 } from "three";
 import { softShadows, OrbitControls, Html } from "drei";
 import RangeSlider from "react-bootstrap-range-slider";
 
+import NextPrevButton from "../components/next-prevButton.component";
 import PlanetMesh from "../3d/PlanetMesh";
 import mercuryTexture from "../3d/textures/Mercury_Diffuse.png";
 import venusTexture from "../3d/textures/Venus_Diffuse.png";
@@ -34,29 +35,13 @@ softShadows({
   rings: 11, // Rings (default: 11)
 });
 
-function NextButton() {
-  return (
-    <div id="nextButton" style={{ width: 100, height: 100, backgroundColor: "darkred" }}>
-      Next
-    </div>
-  );
-}
-
-function PrevButton() {
-  return (
-    <div id="previousButton" style={{ width: 100, height: 100, backgroundColor: "darkred" }}>
-      Previous
-    </div>
-  );
-}
-
 function HomePage() {
   const [dissolveAmount, setDissolveAmount] = useState(0);
 
   return (
     <div className="homepageContainer">
-      <NextButton />
-      <PrevButton />
+      <NextPrevButton type="nextButton" />
+      <NextPrevButton type="previousButton" />
       <div className="canvasContainer">
         <Canvas
           gl={{ antialias: true }}
@@ -107,6 +92,7 @@ function HomePage() {
           <RangeSlider
             value={dissolveAmount}
             onChange={(changeEvent: any) => setDissolveAmount(changeEvent.target.value)}
+            variant="primary"
           />
         </div>
       </div>
