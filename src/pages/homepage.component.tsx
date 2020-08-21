@@ -11,6 +11,9 @@ import venusTexture from "../3d/textures/Venus_Diffuse.png";
 import marsTexture from "../3d/textures/Mars_Diffuse.png";
 import earthTexture from "../3d/textures/Earth_Diffuse.png";
 import jupiterTexture from "../3d/textures/Jupiter_Diffuse.png";
+import saturnTexture from "../3d/textures/Saturn_Diffuse.png";
+import uranusTexture from "../3d/textures/Uranus_Diffuse.png";
+import neptuneTexture from "../3d/textures/Neptune_Diffuse.png";
 
 softShadows({
   frustrum: 3.75, // Frustrum width (default: 3.75)
@@ -78,6 +81,24 @@ function HomePage() {
               dissolveAmount={dissolveAmount}
               texturePath={jupiterTexture}
               size={1.5}
+            />
+            <PlanetMesh
+              position={new Vector3(25, 0, 0)}
+              dissolveAmount={dissolveAmount}
+              texturePath={saturnTexture}
+              size={1.5}
+            />
+            <PlanetMesh
+              position={new Vector3(30, 0, 0)}
+              dissolveAmount={dissolveAmount}
+              texturePath={uranusTexture}
+              size={1}
+            />
+            <PlanetMesh
+              position={new Vector3(35, 0, 0)}
+              dissolveAmount={dissolveAmount}
+              texturePath={neptuneTexture}
+              size={1}
             />
           </Suspense>
           <OrbitControls />
