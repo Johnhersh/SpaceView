@@ -8,12 +8,23 @@ import RangeSlider from "react-bootstrap-range-slider";
 import PlanetMesh from "../3d/PlanetMesh";
 import mercuryTexture from "../3d/textures/Mercury_Diffuse.png";
 import venusTexture from "../3d/textures/Venus_Diffuse.png";
-import marsTexture from "../3d/textures/Mars_Diffuse.png";
 import earthTexture from "../3d/textures/Earth_Diffuse.png";
+import marsTexture from "../3d/textures/Mars_Diffuse.png";
 import jupiterTexture from "../3d/textures/Jupiter_Diffuse.png";
 import saturnTexture from "../3d/textures/Saturn_Diffuse.png";
 import uranusTexture from "../3d/textures/Uranus_Diffuse.png";
 import neptuneTexture from "../3d/textures/Neptune_Diffuse.png";
+
+const solarSystemData = [
+  { texture: mercuryTexture, size: 0.5 },
+  { texture: venusTexture, size: 1 },
+  { texture: earthTexture, size: 1 },
+  { texture: marsTexture, size: 0.75 },
+  { texture: jupiterTexture, size: 1.5 },
+  { texture: saturnTexture, size: 1.5 },
+  { texture: uranusTexture, size: 1 },
+  { texture: neptuneTexture, size: 1 },
+];
 
 softShadows({
   frustrum: 3.75, // Frustrum width (default: 3.75)
@@ -52,54 +63,17 @@ function HomePage() {
             </mesh>
           </group>
           <Suspense fallback={<Html>Loading</Html>}>
-            <PlanetMesh
-              position={new Vector3(0, 0, 0)}
-              dissolveAmount={dissolveAmount}
-              texturePath={mercuryTexture}
-              size={0.5}
-            />
-            <PlanetMesh
-              position={new Vector3(5, 0, 0)}
-              dissolveAmount={dissolveAmount}
-              texturePath={venusTexture}
-              size={1}
-            />
-            <PlanetMesh
-              position={new Vector3(10, 0, 0)}
-              dissolveAmount={dissolveAmount}
-              texturePath={earthTexture}
-              size={1}
-            />
-            <PlanetMesh
-              position={new Vector3(15, 0, 0)}
-              dissolveAmount={dissolveAmount}
-              texturePath={marsTexture}
-              size={0.75}
-            />
-            <PlanetMesh
-              position={new Vector3(20, 0, 0)}
-              dissolveAmount={dissolveAmount}
-              texturePath={jupiterTexture}
-              size={1.5}
-            />
-            <PlanetMesh
-              position={new Vector3(25, 0, 0)}
-              dissolveAmount={dissolveAmount}
-              texturePath={saturnTexture}
-              size={1.5}
-            />
-            <PlanetMesh
-              position={new Vector3(30, 0, 0)}
-              dissolveAmount={dissolveAmount}
-              texturePath={uranusTexture}
-              size={1}
-            />
-            <PlanetMesh
-              position={new Vector3(35, 0, 0)}
-              dissolveAmount={dissolveAmount}
-              texturePath={neptuneTexture}
-              size={1}
-            />
+            {solarSystemData.map((planet, index) => {
+              return (
+                <PlanetMesh
+                  position={new Vector3(index * 5, 0, 0)}
+                  dissolveAmount={dissolveAmount}
+                  texturePath={planet.texture}
+                  size={planet.size}
+                  key={index}
+                />
+              );
+            })}
           </Suspense>
           <OrbitControls />
         </Canvas>
