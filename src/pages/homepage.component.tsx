@@ -34,11 +34,29 @@ softShadows({
   rings: 11, // Rings (default: 11)
 });
 
+function NextButton() {
+  return (
+    <div id="nextButton" style={{ width: 100, height: 100, backgroundColor: "darkred" }}>
+      Next
+    </div>
+  );
+}
+
+function PrevButton() {
+  return (
+    <div id="previousButton" style={{ width: 100, height: 100, backgroundColor: "darkred" }}>
+      Previous
+    </div>
+  );
+}
+
 function HomePage() {
   const [dissolveAmount, setDissolveAmount] = useState(0);
 
   return (
     <div className="homepageContainer">
+      <NextButton />
+      <PrevButton />
       <div className="canvasContainer">
         <Canvas
           gl={{ antialias: true }}

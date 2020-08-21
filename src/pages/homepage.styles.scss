@@ -13,10 +13,6 @@
   width: 100%;
 }
 
-html,
-body,
-#root,
-.bg,
 canvas {
   outline: none; // Disable outline when clicking the 3D view
 }
@@ -30,4 +26,18 @@ canvas {
 .sliderContainer {
   flex: 1;
   padding-bottom: 2em;
+}
+
+#nextButton {
+  position: absolute;
+  top: 50%;
+  right: 0px;
+  z-index: 100;
+}
+
+#previousButton {
+  position: absolute;
+  top: 50%;
+  left: 0px;
+  z-index: 100;
 }
