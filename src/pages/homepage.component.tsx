@@ -38,10 +38,17 @@ softShadows({
 function HomePage() {
   const [dissolveAmount, setDissolveAmount] = useState(0);
 
+  function onNextButtonPress() {
+    console.log("Clicked Next!");
+  }
+  function onPreviousButtonPress() {
+    console.log("Clicked Previous!");
+  }
+
   return (
     <div className="homepageContainer">
-      <NextPrevButton type="nextButton" />
-      <NextPrevButton type="previousButton" />
+      <NextPrevButton type="nextButton" clickFunction={onNextButtonPress} />
+      <NextPrevButton type="previousButton" clickFunction={onPreviousButtonPress} />
       <div className="canvasContainer">
         <Canvas
           gl={{ antialias: true }}
