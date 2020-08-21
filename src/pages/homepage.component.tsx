@@ -40,7 +40,12 @@ function HomePage() {
   return (
     <div className="homepageContainer">
       <div className="canvasContainer">
-        <Canvas colorManagement={true} camera={{ position: [-5, 2, 10], fov: 60 }} shadowMap>
+        <Canvas
+          gl={{ antialias: true }}
+          colorManagement={true}
+          camera={{ position: [-5, 2, 10], fov: 60 }}
+          shadowMap
+        >
           <ambientLight intensity={0.3} />
           <directionalLight
             castShadow
