@@ -46,8 +46,6 @@ function HomePage() {
     config: { clamp: true, mass: 1, tension: 150, friction: 50, precision: 0.0001 },
   });
 
-  const xOffset = spring.to([0, 1], [0, 1]);
-
   function onNextButtonPress() {
     if (systemOffset > (solarSystemData.length - 1) * planetDistance * -1)
       setSystemOffset(systemOffset - planetDistance);
@@ -92,7 +90,7 @@ function HomePage() {
               <shadowMaterial attach="material" opacity={0.3} />
             </mesh>
           </group>
-          <a.group position-x={xOffset}>
+          <a.group position-x={spring}>
             <Suspense fallback={<Html>Loading</Html>}>
               {solarSystemData.map((planet, index) => {
                 return (
