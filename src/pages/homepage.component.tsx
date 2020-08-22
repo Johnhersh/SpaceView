@@ -43,7 +43,7 @@ function HomePage() {
   const planetDistance = 5;
   const { spring } = useSpring({
     spring: systemOffset,
-    config: { clamp: true, mass: 1, tension: 200, friction: 50, precision: 0.0001 },
+    config: { clamp: true, mass: 1, tension: 150, friction: 50, precision: 0.0001 },
   });
 
   const xOffset = spring.to([0, 1], [0, 1]);
