@@ -5,10 +5,11 @@ import { Vector3 } from "three";
 import { softShadows, OrbitControls, Html } from "drei";
 import { useSpring } from "@react-spring/core";
 import { a } from "@react-spring/three";
-import RangeSlider from "react-bootstrap-range-slider";
 
 import NextPrevButton from "../components/next-prevButton.component";
+import InfoView from "../components/infoView.component";
 import PlanetMesh from "../3d/PlanetMesh";
+
 import mercuryTexture from "../3d/textures/Mercury_Diffuse.png";
 import venusTexture from "../3d/textures/Venus_Diffuse.png";
 import earthTexture from "../3d/textures/Earth_Diffuse.png";
@@ -19,14 +20,14 @@ import uranusTexture from "../3d/textures/Uranus_Diffuse.png";
 import neptuneTexture from "../3d/textures/Neptune_Diffuse.png";
 
 const solarSystemData = [
-  { texture: mercuryTexture, size: 0.5 },
-  { texture: venusTexture, size: 1 },
-  { texture: earthTexture, size: 1 },
-  { texture: marsTexture, size: 0.75 },
-  { texture: jupiterTexture, size: 1.5 },
-  { texture: saturnTexture, size: 1.5 },
-  { texture: uranusTexture, size: 1 },
-  { texture: neptuneTexture, size: 1 },
+  { name: "Mercury", texture: mercuryTexture, size: 0.5 },
+  { name: "Venus", texture: venusTexture, size: 1 },
+  { name: "Earth", texture: earthTexture, size: 1 },
+  { name: "Mars", texture: marsTexture, size: 0.75 },
+  { name: "Jupiter", texture: jupiterTexture, size: 1.5 },
+  { name: "Saturn", texture: saturnTexture, size: 1.5 },
+  { name: "Uranus", texture: uranusTexture, size: 1 },
+  { name: "Neptune", texture: neptuneTexture, size: 1 },
 ];
 
 softShadows({
@@ -40,18 +41,27 @@ softShadows({
 function HomePage() {
   const [dissolveAmount, setDissolveAmount] = useState(0);
   const [systemOffset, setSystemOffset] = useState(0);
+  const [activePlanet, setActivePlanet] = useState(solarSystemData[0].name);
   const planetDistance = 5;
+  const shadowSize = 40;
   const { spring } = useSpring({
     spring: systemOffset,
     config: { clamp: true, mass: 1, tension: 150, friction: 50, precision: 0.0001 },
   });
 
   function onNextButtonPress() {
-    if (systemOffset > (solarSystemData.length - 1) * planetDistance * -1)
+    if (systemOffset > (solarSystemData.length - 1) * planetDistance * -1) {
+      const newIndex = Math.abs((systemOffset - planetDistance) / planetDistance);
       setSystemOffset(systemOffset - planetDistance);
+      setActivePlanet(solarSystemData[newIndex].name);
+    }
   }
   function onPreviousButtonPress() {
-    if (systemOffset < 0) setSystemOffset(systemOffset + planetDistance);
+    if (systemOffset < 0) {
+      const newIndex = Math.abs((systemOffset + planetDistance) / planetDistance);
+      setSystemOffset(systemOffset + planetDistance);
+      setActivePlanet(solarSystemData[newIndex].name);
+    }
   }
 
   return (
@@ -74,11 +84,12 @@ function HomePage() {
             castShadow
             position={[0, 10, 0]}
             intensity={1.5}
-            shadow-mapSize-width={2048}
-            shadow-mapSize-height={2048}
-            shadow-camera-far={50}
-            shadow-camera-left={-10}
-            shadow-camera-right={50}
+            shadow-mapSize-width={4096}
+            shadow-mapSize-height={4096}
+            shadow-camera-near={-shadowSize}
+            shadow-camera-far={shadowSize}
+            shadow-camera-left={-shadowSize}
+            shadow-camera-right={shadowSize}
             shadow-camera-top={10}
             shadow-camera-bottom={-10}
           />
@@ -108,16 +119,7 @@ function HomePage() {
           <OrbitControls enablePan={false} maxDistance={10} minDistance={2} />
         </Canvas>
       </div>
-      <div className="settingsContainer">
-        <h1>Settings</h1>
-        <div className="sliderContainer">
-          <RangeSlider
-            value={dissolveAmount}
-            onChange={(changeEvent: any) => setDissolveAmount(changeEvent.target.value)}
-            variant="primary"
-          />
-        </div>
-      </div>
+      <InfoView title={activePlanet} dissolve={dissolveAmount} setDissolve={setDissolveAmount} />
     </div>
   );
 }
