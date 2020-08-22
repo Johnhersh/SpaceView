@@ -3,6 +3,8 @@ import "./homepage.styles.scss";
 import { Canvas } from "react-three-fiber";
 import { Vector3 } from "three";
 import { softShadows, OrbitControls, Html } from "drei";
+import { useSpring } from "@react-spring/core";
+import { a } from "@react-spring/three";
 import RangeSlider from "react-bootstrap-range-slider";
 
 import NextPrevButton from "../components/next-prevButton.component";
@@ -37,12 +39,21 @@ softShadows({
 
 function HomePage() {
   const [dissolveAmount, setDissolveAmount] = useState(0);
+  const [systemOffset, setSystemOffset] = useState(0);
+  const planetDistance = 5;
+  const { spring } = useSpring({
+    spring: systemOffset,
+    config: { clamp: true, mass: 1, tension: 200, friction: 50, precision: 0.0001 },
+  });
+
+  const xOffset = spring.to([0, 1], [0, 1]);
 
   function onNextButtonPress() {
-    console.log("Clicked Next!");
+    if (systemOffset > (solarSystemData.length - 1) * planetDistance * -1)
+      setSystemOffset(systemOffset - planetDistance);
   }
   function onPreviousButtonPress() {
-    console.log("Clicked Previous!");
+    if (systemOffset < 0) setSystemOffset(systemOffset + planetDistance);
   }
 
   return (
@@ -81,19 +92,21 @@ function HomePage() {
               <shadowMaterial attach="material" opacity={0.3} />
             </mesh>
           </group>
-          <Suspense fallback={<Html>Loading</Html>}>
-            {solarSystemData.map((planet, index) => {
-              return (
-                <PlanetMesh
-                  position={new Vector3(index * 5, 0, 0)}
-                  dissolveAmount={dissolveAmount}
-                  texturePath={planet.texture}
-                  size={planet.size}
-                  key={index}
-                />
-              );
-            })}
-          </Suspense>
+          <a.group position-x={xOffset}>
+            <Suspense fallback={<Html>Loading</Html>}>
+              {solarSystemData.map((planet, index) => {
+                return (
+                  <PlanetMesh
+                    position={new Vector3(index * planetDistance, 0, 0)}
+                    dissolveAmount={dissolveAmount}
+                    texturePath={planet.texture}
+                    size={planet.size}
+                    key={index}
+                  />
+                );
+              })}
+            </Suspense>
+          </a.group>
           <OrbitControls enablePan={false} maxDistance={10} minDistance={2} />
         </Canvas>
       </div>
