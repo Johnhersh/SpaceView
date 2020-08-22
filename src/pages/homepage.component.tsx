@@ -24,10 +24,10 @@ const solarSystemData = [
   { name: "Venus", texture: venusTexture, size: 1 },
   { name: "Earth", texture: earthTexture, size: 1 },
   { name: "Mars", texture: marsTexture, size: 0.75 },
-  { name: "Jupiter", texture: jupiterTexture, size: 1.5 },
-  { name: "Saturn", texture: saturnTexture, size: 1.5 },
-  { name: "Uranus", texture: uranusTexture, size: 1 },
-  { name: "Neptune", texture: neptuneTexture, size: 1 },
+  { name: "Jupiter", texture: jupiterTexture, size: 1.75 },
+  { name: "Saturn", texture: saturnTexture, size: 1.75 },
+  { name: "Uranus", texture: uranusTexture, size: 1.2 },
+  { name: "Neptune", texture: neptuneTexture, size: 1.2 },
 ];
 
 softShadows({
