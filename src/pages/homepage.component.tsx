@@ -9,10 +9,13 @@ import { a } from "@react-spring/three";
 import NextPrevButton from "../components/next-prevButton.component";
 import InfoView from "../components/infoView.component";
 import PlanetMesh from "../3d/PlanetMesh";
+import PlanetEarthMesh from "../3d/PlanetEarthMesh";
 
 import mercuryTexture from "../3d/textures/Mercury_Diffuse.png";
 import venusTexture from "../3d/textures/Venus_Diffuse.png";
 import earthTexture from "../3d/textures/Earth_Diffuse.png";
+import earthNightTexture from "../3d/textures/Earth/Earth_Night_Diffuse.png";
+import earthCloudsTexture from "../3d/textures/Earth/Earth_Clouds.png";
 import marsTexture from "../3d/textures/Mars_Diffuse.png";
 import jupiterTexture from "../3d/textures/Jupiter_Diffuse.png";
 import saturnTexture from "../3d/textures/Saturn_Diffuse.png";
@@ -104,6 +107,18 @@ function HomePage() {
           <a.group position-x={spring}>
             <Suspense fallback={<Html>Loading</Html>}>
               {solarSystemData.map((planet, index) => {
+                if (planet.name == "Earth")
+                  return (
+                    <PlanetEarthMesh
+                      position={new Vector3(index * planetDistance, 0, 0)}
+                      dissolveAmount={dissolveAmount}
+                      texturePath={planet.texture}
+                      size={planet.size}
+                      key={index}
+                      nightTexturePath={earthNightTexture}
+                      cloudsTexturePath={earthCloudsTexture}
+                    />
+                  );
                 return (
                   <PlanetMesh
                     position={new Vector3(index * planetDistance, 0, 0)}

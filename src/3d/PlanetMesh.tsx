@@ -7,7 +7,7 @@ import PlanetMaterial from "./PlanetMaterial";
 interface SpinningMeshProps {
   position: THREE.Vector3;
   dissolveAmount: number;
-  texturePath: any;
+  texturePath: string;
   size: number;
 }
 
