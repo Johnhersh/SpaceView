@@ -26,6 +26,7 @@ uniform sampler2D tDiffuseAlt;
 uniform sampler2D tClouds;
 uniform float cloudsDissolve;
 uniform float dayNight;
+uniform float u_time;
 
 void main() {
     vec2 uv = vUv;
@@ -35,10 +36,11 @@ void main() {
     float maxValue = scaleAndOffset;
     vec4 tex = texture2D(tDiffuse, uv);
     vec4 texAlt = texture2D(tDiffuseAlt, uv);
+    uv = vec2(uv.x + u_time,uv.y);
     vec4 clouds = texture2D(tClouds, uv);
     float dissolve = 1.0 - smoothstep(minValue, maxValue, clouds.r);
     vec4 blendResult = mix(tex, texAlt, dayNight);
-    blendResult = mix(blendResult, clouds, dissolve);
+    blendResult = mix(blendResult, vec4(1,1,1,1), dissolve);
     gl_FragColor = vec4( blendResult );
 }
 `;
@@ -59,6 +61,7 @@ export default function PlanetMaterial({
   dayNightBlend,
 }: PlanetMaterialProps) {
   const material = useRef<typeof ShaderMaterial>(null);
+  const u_time = useRef(0);
 
   const uniforms = {
     tDiffuse: { value: diffuse },
@@ -66,12 +69,15 @@ export default function PlanetMaterial({
     tClouds: { value: cloudsTexture },
     cloudsDissolve: { value: cloudsDissolveAmount },
     dayNight: { value: dayNightBlend },
+    u_time: { value: u_time.current },
   };
 
-  useFrame(() => {
+  useFrame((_state, delta) => {
     if (material.current !== (undefined || null)) {
-      uniforms.cloudsDissolve = { value: cloudsDissolveAmount / 100 };
+      uniforms.cloudsDissolve = { value: cloudsDissolveAmount / 400 };
       uniforms.dayNight = { value: dayNightBlend / 100 };
+      u_time.current += delta * 0.03;
+      uniforms.u_time = { value: u_time.current };
     }
   });
 

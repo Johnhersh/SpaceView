@@ -42,7 +42,8 @@ softShadows({
 });
 
 function HomePage() {
-  const [dissolveAmount, setDissolveAmount] = useState(0);
+  const [earthNightDayAmount, setEarthNightDay] = useState(0);
+  const [earthCloudsAmount, setEarthClouds] = useState(0);
   const [systemOffset, setSystemOffset] = useState(0);
   const [activePlanet, setActivePlanet] = useState(solarSystemData[0].name);
   const planetDistance = 5;
@@ -107,11 +108,12 @@ function HomePage() {
           <a.group position-x={spring}>
             <Suspense fallback={<Html>Loading</Html>}>
               {solarSystemData.map((planet, index) => {
-                if (planet.name == "Earth")
+                if (planet.name === "Earth")
                   return (
                     <PlanetEarthMesh
                       position={new Vector3(index * planetDistance, 0, 0)}
-                      dissolveAmount={dissolveAmount}
+                      dissolveAmount={earthNightDayAmount}
+                      cloudsDissolveAmount={earthCloudsAmount}
                       texturePath={planet.texture}
                       size={planet.size}
                       key={index}
@@ -122,7 +124,7 @@ function HomePage() {
                 return (
                   <PlanetMesh
                     position={new Vector3(index * planetDistance, 0, 0)}
-                    dissolveAmount={dissolveAmount}
+                    dissolveAmount={0}
                     texturePath={planet.texture}
                     size={planet.size}
                     key={index}
@@ -134,7 +136,13 @@ function HomePage() {
           <OrbitControls enablePan={false} maxDistance={10} minDistance={2} />
         </Canvas>
       </div>
-      <InfoView title={activePlanet} dissolve={dissolveAmount} setDissolve={setDissolveAmount} />
+      <InfoView
+        title={activePlanet}
+        earthNightDayAmount={earthNightDayAmount}
+        setEarthNightDay={setEarthNightDay}
+        earthCloudsAmount={earthCloudsAmount}
+        setEarthClouds={setEarthClouds}
+      />
     </div>
   );
 }

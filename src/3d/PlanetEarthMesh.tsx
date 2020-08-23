@@ -7,6 +7,7 @@ import EarthMaterial from "./EarthMaterial";
 interface SpinningMeshProps {
   position: THREE.Vector3;
   dissolveAmount: number;
+  cloudsDissolveAmount: number;
   texturePath: string;
   size: number;
   nightTexturePath: string;
@@ -16,6 +17,7 @@ interface SpinningMeshProps {
 const PlanetEarthMesh = ({
   position,
   dissolveAmount,
+  cloudsDissolveAmount,
   texturePath,
   size,
   nightTexturePath,
@@ -25,6 +27,7 @@ const PlanetEarthMesh = ({
   const diffuseTexture = useLoader(THREE.TextureLoader, texturePath);
   const nightTexture = useLoader(THREE.TextureLoader, nightTexturePath);
   const cloudsTexture = useLoader(THREE.TextureLoader, cloudsTexturePath);
+  cloudsTexture.wrapS = THREE.RepeatWrapping;
 
   const radius = size;
   const segments = 32;
@@ -41,7 +44,7 @@ const PlanetEarthMesh = ({
         diffuse={diffuseTexture}
         diffuseNight={nightTexture}
         cloudsTexture={cloudsTexture}
-        cloudsDissolveAmount={0}
+        cloudsDissolveAmount={cloudsDissolveAmount}
         dayNightBlend={dissolveAmount}
       />
     </mesh>

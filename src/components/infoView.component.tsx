@@ -6,22 +6,37 @@ import planetData from "./infoView-planetData";
 
 interface InfoViewProps {
   title: string;
-  dissolve: number;
-  setDissolve: Function;
+  earthNightDayAmount: number;
+  setEarthNightDay: Function;
+  earthCloudsAmount: number;
+  setEarthClouds: Function;
 }
 
-const InfoView: FunctionComponent<InfoViewProps> = ({ title, dissolve, setDissolve }) => {
+const InfoView: FunctionComponent<InfoViewProps> = ({
+  title,
+  earthNightDayAmount,
+  setEarthNightDay,
+  earthCloudsAmount,
+  setEarthClouds,
+}) => {
   return (
     <div id="settingsContainer">
       <div id="mainSettingsSection">
         <h1>{title}</h1>
-        <div id="sliderContainer">
-          <RangeSlider
-            value={dissolve}
-            onChange={(changeEvent: any) => setDissolve(changeEvent.target.value)}
-            variant="primary"
-          />
-        </div>
+        {title === "Earth" && (
+          <div id="sliderContainer">
+            <RangeSlider
+              value={earthNightDayAmount}
+              onChange={(changeEvent: any) => setEarthNightDay(changeEvent.target.value)}
+              variant="primary"
+            />
+            <RangeSlider
+              value={earthCloudsAmount}
+              onChange={(changeEvent: any) => setEarthClouds(changeEvent.target.value)}
+              variant="primary"
+            />
+          </div>
+        )}
       </div>
       <div id="infoContainer">
         <p>
