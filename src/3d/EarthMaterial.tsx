@@ -26,10 +26,10 @@ uniform sampler2D tDiffuse;
 uniform sampler2D tDiffuseAlt;
 uniform sampler2D tClouds;
 uniform sampler2D tCombineMap; // Spec in R, cloud-movement in G
-uniform sampler2D tNoiseMap;
 uniform float cloudsDissolve;
 uniform float bNightMode;
 uniform float u_time;
+uniform float time;
 uniform vec3 lightPosition;
 
 void main() {
@@ -45,7 +45,8 @@ void main() {
     /** Textures */
     vec4 combineMap = texture2D(tCombineMap, uv);
     vec2 cloudsUVs = vec2(uv.x + u_time, uv.y);
-    cloudsUVs = vec2(cloudsUVs.x, cloudsUVs.y  + combineMap.g * 0.2);
+    float UVoffset = (combineMap.g - 0.5) * 2.0;
+    cloudsUVs = vec2(cloudsUVs.x + abs(UVoffset * 0.01), cloudsUVs.y  + UVoffset * 0.04);
     vec4 clouds = texture2D(tClouds, cloudsUVs);
     vec4 tex = texture2D(tDiffuse, uv);
     vec4 texAlt = texture2D(tDiffuseAlt, uv);
@@ -53,13 +54,15 @@ void main() {
     /** Dissolve */
     float softness = 0.5;
     float scaleAndOffset = (cloudsDissolve * softness) + cloudsDissolve;
+    scaleAndOffset *= pow(combineMap.g, 3.0);
     float minValue = scaleAndOffset - softness;
     float maxValue = scaleAndOffset;
     float cloudsValue = 1.0 - smoothstep(minValue, maxValue, clouds.r);
+    cloudsValue = cloudsValue * (pow(combineMap.g, 2.0)+0.5);
     
     /** Specular */
     vec3 directionToCamera = normalize(cameraPosition - worldPosition);
-    float specularAmount = 0.7 * combineMap.r;
+    float specularAmount = 0.8 * combineMap.r;
     float specularShininess = 64.0;
     vec3 halfwayVector = normalize( directionToCamera + lightPosition);
     float specularDot = max(0.0, dot(worldNormal, halfwayVector));
@@ -114,9 +117,9 @@ export default function PlanetMaterial({
 
   useFrame((_state, delta) => {
     if (material.current !== (undefined || null)) {
-      uniforms.cloudsDissolve = { value: cloudsDissolveAmount / 400 };
+      uniforms.cloudsDissolve = { value: cloudsDissolveAmount / 80 };
       uniforms.bNightMode = { value: dayNightBlend / 100 };
-      u_time.current += delta * 0.03;
+      u_time.current += delta * 0.02;
       uniforms.u_time = { value: u_time.current };
     }
   });
