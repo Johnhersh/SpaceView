@@ -27,7 +27,7 @@ uniform sampler2D tDiffuseAlt;
 uniform sampler2D tClouds;
 uniform sampler2D tSpecMap;
 uniform float cloudsDissolve;
-uniform float dayNight;
+uniform float bNightMode;
 uniform float u_time;
 uniform vec3 lightPosition;
 
@@ -52,7 +52,7 @@ void main() {
     float scaleAndOffset = (cloudsDissolve * softness) + cloudsDissolve;
     float minValue = scaleAndOffset - softness;
     float maxValue = scaleAndOffset;
-    float dissolve = 1.0 - smoothstep(minValue, maxValue, clouds.r);
+    float cloudsValue = 1.0 - smoothstep(minValue, maxValue, clouds.r);
     
     /** Specular */
     vec3 directionToCamera = normalize(cameraPosition - worldPosition);
@@ -63,17 +63,17 @@ void main() {
     float specularBrightness = specularAmount * pow(specularDot, specularShininess);
     
     /** Lambertian brightness */
-    vec3 lightVector = normalize( lightPosition - worldPosition );
+    vec3 lightVector = normalize(lightPosition - worldPosition);
     float brightness = dot( worldNormal, lightVector );
     
     
     /** Final result */
-    vec4 blendResult = mix(tex, texAlt, dayNight);
-    blendResult = (blendResult * brightness);
-    blendResult+= specularBrightness;
-    blendResult = mix(blendResult, vec4(1,1,1,1), dissolve);
+    vec4 blendDayNight = mix(texAlt, tex, brightness);
+    blendDayNight = vec4(blendDayNight + specularBrightness);
+    blendDayNight = mix(blendDayNight, vec4(1,1,1,1), cloudsValue*brightness); // Add clouds in
+    vec4 blendResult = mix(tex, blendDayNight, bNightMode);
     
-    blendResult.a = 1.0;
+    // blendResult.a = 1.0;
     gl_FragColor = vec4( vec3(blendResult), 1.0 );
 }
 `;
@@ -104,7 +104,7 @@ export default function PlanetMaterial({
     tClouds: { value: cloudsTexture },
     tSpecMap: { value: specularTexture },
     cloudsDissolve: { value: cloudsDissolveAmount },
-    dayNight: { value: dayNightBlend },
+    bNightMode: { value: dayNightBlend },
     u_time: { value: u_time.current },
     lightPosition: { value: new THREE.Vector3(2, 2, 2) },
   };
@@ -112,10 +112,9 @@ export default function PlanetMaterial({
   useFrame((_state, delta) => {
     if (material.current !== (undefined || null)) {
       uniforms.cloudsDissolve = { value: cloudsDissolveAmount / 400 };
-      uniforms.dayNight = { value: dayNightBlend / 100 };
+      uniforms.bNightMode = { value: dayNightBlend / 100 };
       u_time.current += delta * 0.03;
       uniforms.u_time = { value: u_time.current };
-      //   state.camera.getWorldPosition;
     }
   });
 
