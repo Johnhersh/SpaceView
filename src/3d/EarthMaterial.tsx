@@ -25,7 +25,8 @@ uniform mat4 modelMatrix;
 uniform sampler2D tDiffuse;
 uniform sampler2D tDiffuseAlt;
 uniform sampler2D tClouds;
-uniform sampler2D tSpecMap;
+uniform sampler2D tCombineMap; // Spec in R, cloud-movement in G
+uniform sampler2D tNoiseMap;
 uniform float cloudsDissolve;
 uniform float bNightMode;
 uniform float u_time;
@@ -42,10 +43,12 @@ void main() {
     vec3 worldPosition = ( modelMatrix * vec4( vPosition, 1.0 )).xyz;
     
     /** Textures */
-    vec4 clouds = texture2D(tClouds, vec2(uv.x + u_time, uv.y));
+    vec4 combineMap = texture2D(tCombineMap, uv);
+    vec2 cloudsUVs = vec2(uv.x + u_time, uv.y);
+    cloudsUVs = vec2(cloudsUVs.x, cloudsUVs.y  + combineMap.g * 0.2);
+    vec4 clouds = texture2D(tClouds, cloudsUVs);
     vec4 tex = texture2D(tDiffuse, uv);
     vec4 texAlt = texture2D(tDiffuseAlt, uv);
-    vec4 specMap = texture2D(tSpecMap, uv);
     
     /** Dissolve */
     float softness = 0.5;
@@ -56,7 +59,7 @@ void main() {
     
     /** Specular */
     vec3 directionToCamera = normalize(cameraPosition - worldPosition);
-    float specularAmount = 0.7 * specMap.r;
+    float specularAmount = 0.7 * combineMap.r;
     float specularShininess = 64.0;
     vec3 halfwayVector = normalize( directionToCamera + lightPosition);
     float specularDot = max(0.0, dot(worldNormal, halfwayVector));
@@ -82,7 +85,7 @@ interface PlanetMaterialProps {
   diffuse: Texture;
   diffuseNight: Texture;
   cloudsTexture: Texture;
-  specularTexture: Texture;
+  combineTexture: Texture;
   cloudsDissolveAmount: number;
   dayNightBlend: number;
 }
@@ -91,7 +94,7 @@ export default function PlanetMaterial({
   diffuse,
   diffuseNight,
   cloudsTexture,
-  specularTexture,
+  combineTexture,
   cloudsDissolveAmount,
   dayNightBlend,
 }: PlanetMaterialProps) {
@@ -102,7 +105,7 @@ export default function PlanetMaterial({
     tDiffuse: { value: diffuse },
     tDiffuseAlt: { value: diffuseNight },
     tClouds: { value: cloudsTexture },
-    tSpecMap: { value: specularTexture },
+    tCombineMap: { value: combineTexture },
     cloudsDissolve: { value: cloudsDissolveAmount },
     bNightMode: { value: dayNightBlend },
     u_time: { value: u_time.current },
