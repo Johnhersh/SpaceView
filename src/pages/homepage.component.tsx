@@ -16,6 +16,7 @@ import venusTexture from "../3d/textures/Venus_Diffuse.png";
 import earthTexture from "../3d/textures/Earth_Diffuse.png";
 import earthNightTexture from "../3d/textures/Earth/Earth_Night_Diffuse.png";
 import earthCloudsTexture from "../3d/textures/Earth/Earth_Clouds.png";
+import earthSpecularTexture from "../3d/textures/Earth/Earth_Specular.png";
 import marsTexture from "../3d/textures/Mars_Diffuse.png";
 import jupiterTexture from "../3d/textures/Jupiter_Diffuse.png";
 import saturnTexture from "../3d/textures/Saturn_Diffuse.png";
@@ -119,6 +120,7 @@ function HomePage() {
                       key={index}
                       nightTexturePath={earthNightTexture}
                       cloudsTexturePath={earthCloudsTexture}
+                      specularTexturePath={earthSpecularTexture}
                     />
                   );
                 return (

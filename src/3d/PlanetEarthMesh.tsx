@@ -12,6 +12,7 @@ interface SpinningMeshProps {
   size: number;
   nightTexturePath: string;
   cloudsTexturePath: string;
+  specularTexturePath: string;
 }
 
 const PlanetEarthMesh = ({
@@ -22,11 +23,13 @@ const PlanetEarthMesh = ({
   size,
   nightTexturePath,
   cloudsTexturePath,
+  specularTexturePath,
 }: SpinningMeshProps) => {
   const mesh = useRef<THREE.Mesh>();
   const diffuseTexture = useLoader(THREE.TextureLoader, texturePath);
   const nightTexture = useLoader(THREE.TextureLoader, nightTexturePath);
   const cloudsTexture = useLoader(THREE.TextureLoader, cloudsTexturePath);
+  const specularTexture = useLoader(THREE.TextureLoader, specularTexturePath);
   cloudsTexture.wrapS = THREE.RepeatWrapping;
 
   const radius = size;
@@ -46,6 +49,7 @@ const PlanetEarthMesh = ({
         cloudsTexture={cloudsTexture}
         cloudsDissolveAmount={cloudsDissolveAmount}
         dayNightBlend={dissolveAmount}
+        specularTexture={specularTexture}
       />
     </mesh>
   );

@@ -25,6 +25,7 @@ uniform mat4 modelMatrix;
 uniform sampler2D tDiffuse;
 uniform sampler2D tDiffuseAlt;
 uniform sampler2D tClouds;
+uniform sampler2D tSpecMap;
 uniform float cloudsDissolve;
 uniform float dayNight;
 uniform float u_time;
@@ -44,6 +45,7 @@ void main() {
     vec4 clouds = texture2D(tClouds, vec2(uv.x + u_time, uv.y));
     vec4 tex = texture2D(tDiffuse, uv);
     vec4 texAlt = texture2D(tDiffuseAlt, uv);
+    vec4 specMap = texture2D(tSpecMap, uv);
     
     /** Dissolve */
     float softness = 0.5;
@@ -54,8 +56,8 @@ void main() {
     
     /** Specular */
     vec3 directionToCamera = normalize(cameraPosition - worldPosition);
-    float specularAmount = 1.0;
-    float specularShininess = 32.0;
+    float specularAmount = 0.7 * specMap.r;
+    float specularShininess = 64.0;
     vec3 halfwayVector = normalize( directionToCamera + lightPosition);
     float specularDot = max(0.0, dot(worldNormal, halfwayVector));
     float specularBrightness = specularAmount * pow(specularDot, specularShininess);
@@ -80,6 +82,7 @@ interface PlanetMaterialProps {
   diffuse: Texture;
   diffuseNight: Texture;
   cloudsTexture: Texture;
+  specularTexture: Texture;
   cloudsDissolveAmount: number;
   dayNightBlend: number;
 }
@@ -88,6 +91,7 @@ export default function PlanetMaterial({
   diffuse,
   diffuseNight,
   cloudsTexture,
+  specularTexture,
   cloudsDissolveAmount,
   dayNightBlend,
 }: PlanetMaterialProps) {
@@ -98,6 +102,7 @@ export default function PlanetMaterial({
     tDiffuse: { value: diffuse },
     tDiffuseAlt: { value: diffuseNight },
     tClouds: { value: cloudsTexture },
+    tSpecMap: { value: specularTexture },
     cloudsDissolve: { value: cloudsDissolveAmount },
     dayNight: { value: dayNightBlend },
     u_time: { value: u_time.current },
