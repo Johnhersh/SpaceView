@@ -21,28 +21,32 @@ const InfoView: FunctionComponent<InfoViewProps> = ({
 }) => {
   return (
     <div id="settingsContainer">
-      <div id="mainSettingsSection">
-        <h2>{title}</h2>
-        {title === "Earth" && (
-          <EarthSettings
-            earthNightDayAmount={earthNightDayAmount}
-            setEarthNightDay={setEarthNightDay}
-            earthCloudsAmount={earthCloudsAmount}
-            setEarthClouds={setEarthClouds}
-          />
-        )}
+      <div id="infoViewHeader">
+        <h2 style={{ textAlign: "center" }}>{title}</h2>
       </div>
-      <div id="infoContainer">
-        <p>
-          Distance from sun: {planetData[title].distance}
-          <br />
-          Day length: {planetData[title].dayLength}
-          <br />
-          Length of year: {planetData[title].yearLength}
-          <br />
-          Planet type: {planetData[title].planetType}
-          <br />
-        </p>
+      <div id="infoViewContent">
+        <div id="infoContainer">
+          <p>
+            Distance from sun: {planetData[title].distance}
+            <br />
+            Day length: {planetData[title].dayLength}
+            <br />
+            Length of year: {planetData[title].yearLength}
+            <br />
+            Planet type: {planetData[title].planetType}
+            <br />
+          </p>
+        </div>
+        <div id="mainSettingsSection">
+          {title === "Earth" && (
+            <EarthSettings
+              earthNightDayAmount={earthNightDayAmount}
+              setEarthNightDay={setEarthNightDay}
+              earthCloudsAmount={earthCloudsAmount}
+              setEarthClouds={setEarthClouds}
+            />
+          )}
+        </div>
       </div>
     </div>
   );

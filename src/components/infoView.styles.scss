@@ -1,10 +1,12 @@
 #settingsContainer {
   display: flex;
-  width: 80%;
+  flex-direction: column;
+  align-items: center;
+  min-width: 50%;
   position: absolute;
   bottom: 0px;
   z-index: 100;
-  height: 160px;
+  height: 180px;
   margin-bottom: 2em;
   border-radius: 34px;
   background: #ebecf0;
@@ -13,16 +15,29 @@
 
 #mainSettingsSection {
   flex: 1;
-  padding-left: 1.5em;
-  padding-top: 0.5em;
+  padding-right: 1.5em;
+  padding-top: 0.25em;
 }
 
 #infoContainer {
   flex: 1;
   display: flex;
-  margin-left: 3em;
   align-items: center;
   color: #5f646a;
+  padding-left: 1.5em;
+}
+
+#infoViewHeader {
+  width: 95%;
+  border-bottom: 1px solid;
+  border-bottom-color: #ccd2da;
+  margin-bottom: 0.5em;
+  margin-top: 0.5em;
+}
+
+#infoViewContent {
+  display: flex;
+  width: 100%;
 }
 
 h1 {
