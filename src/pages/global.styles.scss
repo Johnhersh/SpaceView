@@ -1,2 +1,7 @@
 $responsive-width: 1250px; // This gets imported from the item-specific scss files
 $responsive-width-small: 750px;
+
+:root {
+  --color-bg: #ebecf0;
+  --color-text: #5f646a;
+}
