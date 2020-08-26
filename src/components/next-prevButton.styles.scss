@@ -1,13 +1,22 @@
 #nextButton {
   position: absolute;
-  top: 50%;
-  right: 0px;
+  bottom: 6em;
+  right: 3em;
   z-index: 100;
 }
 
 #previousButton {
   position: absolute;
-  top: 50%;
-  left: 0px;
+  // top: 85%;
+  bottom: 6em;
+  left: 3em;
   z-index: 100;
+}
+
+.nextPrevButton {
+  border-style: hidden;
+  color: #5f646a;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #fbfdff, #d4d4d8);
+  box-shadow: 5px 5px 10px #c8c9cc, -5px -5px 10px #ffffff;
 }
