@@ -22,7 +22,7 @@ const InfoView: FunctionComponent<InfoViewProps> = ({
   return (
     <div id="settingsContainer">
       <div id="mainSettingsSection">
-        <h1>{title}</h1>
+        <h2>{title}</h2>
         {title === "Earth" && (
           <EarthSettings
             earthNightDayAmount={earthNightDayAmount}
