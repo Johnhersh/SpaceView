@@ -11,3 +11,17 @@
   margin-bottom: 0.5em;
   height: 100%;
 }
+
+h3 {
+  font-size: small;
+  color: var(--color-text);
+}
+
+.sliderContainer {
+  display: inherit;
+  align-items: center;
+}
+
+.range-slider {
+  margin-left: 0.5em;
+}

@@ -18,16 +18,24 @@ const EarthSettings: FunctionComponent<EarthSettingsProps> = ({
 }) => {
   return (
     <div id="earthSlidersContainer">
-      <RangeSlider
-        value={earthNightDayAmount}
-        onChange={(changeEvent: any) => setEarthNightDay(changeEvent.target.value)}
-        variant="primary"
-      />
-      <RangeSlider
-        value={earthCloudsAmount}
-        onChange={(changeEvent: any) => setEarthClouds(changeEvent.target.value)}
-        variant="primary"
-      />
+      <div className="sliderContainer">
+        <h3>Night:</h3>
+        <RangeSlider
+          value={earthNightDayAmount}
+          onChange={(changeEvent: any) => setEarthNightDay(changeEvent.target.value)}
+          variant="primary"
+          tooltip="off"
+        />
+      </div>
+      <div className="sliderContainer">
+        <h3>Clouds:</h3>
+        <RangeSlider
+          value={earthCloudsAmount}
+          onChange={(changeEvent: any) => setEarthClouds(changeEvent.target.value)}
+          variant="primary"
+          tooltip="off"
+        />
+      </div>
     </div>
   );
 };
