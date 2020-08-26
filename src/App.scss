@@ -9,10 +9,13 @@ body,
   height: 100%;
   margin: 0;
   padding: 0;
+  background-color: #ebecf0;
 }
 
 body {
-  background-color: #f1f4f8;
-  // background-color: darkred;
   position: fixed;
+}
+
+h1 {
+  color: #374375;
 }

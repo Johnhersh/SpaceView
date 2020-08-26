@@ -1,19 +1,33 @@
 #settingsContainer {
   display: flex;
-  flex: -1;
   width: 80%;
-  //   background-color: darkred;
-}
-
-#sliderContainer {
-  flex: 1;
-  padding-bottom: 2em;
+  position: absolute;
+  bottom: 0px;
+  z-index: 100;
+  height: 160px;
+  margin-bottom: 2em;
+  border-radius: 34px;
+  background: #ebecf0;
+  box-shadow: 10px 10px 20px #c1c2c5, -10px -10px 20px #ffffff;
 }
 
 #mainSettingsSection {
   flex: 1;
+  padding-left: 1.5em;
+  padding-top: 0.5em;
 }
 
 #infoContainer {
   flex: 1;
+  display: flex;
+  margin-left: 3em;
+  align-items: center;
+}
+
+h1 {
+  margin-bottom: 0.2em;
+}
+
+p {
+  margin-bottom: 0em;
 }

@@ -1,0 +1,10 @@
+#earthSlidersContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
+  background: #ebecf0;
+  box-shadow: inset 5px 5px 10px #c8c9cc, inset -5px -5px 10px #ffffff;
+  padding-left: 1em;
+  padding-right: 1em;
+}

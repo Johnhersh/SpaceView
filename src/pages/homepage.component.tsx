@@ -77,6 +77,13 @@ function HomePage() {
       <NextPrevButton type="previousButton" clickFunction={onPreviousButtonPress}>
         Previous
       </NextPrevButton>
+      <InfoView
+        title={activePlanet}
+        earthNightDayAmount={earthNightDayAmount}
+        setEarthNightDay={setEarthNightDay}
+        earthCloudsAmount={earthCloudsAmount}
+        setEarthClouds={setEarthClouds}
+      />
       <div className="canvasContainer">
         <Canvas
           gl={{ antialias: true }}
@@ -138,13 +145,6 @@ function HomePage() {
           <OrbitControls enablePan={false} maxDistance={10} minDistance={2} />
         </Canvas>
       </div>
-      <InfoView
-        title={activePlanet}
-        earthNightDayAmount={earthNightDayAmount}
-        setEarthNightDay={setEarthNightDay}
-        earthCloudsAmount={earthCloudsAmount}
-        setEarthClouds={setEarthClouds}
-      />
     </div>
   );
 }

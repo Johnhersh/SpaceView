@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react";
 import "./infoView.styles.scss";
-import RangeSlider from "react-bootstrap-range-slider";
 
+import EarthSettings from "./infoView-Earth.component";
 import planetData from "./infoView-planetData";
 
 interface InfoViewProps {
@@ -24,18 +24,12 @@ const InfoView: FunctionComponent<InfoViewProps> = ({
       <div id="mainSettingsSection">
         <h1>{title}</h1>
         {title === "Earth" && (
-          <div id="sliderContainer">
-            <RangeSlider
-              value={earthNightDayAmount}
-              onChange={(changeEvent: any) => setEarthNightDay(changeEvent.target.value)}
-              variant="primary"
-            />
-            <RangeSlider
-              value={earthCloudsAmount}
-              onChange={(changeEvent: any) => setEarthClouds(changeEvent.target.value)}
-              variant="primary"
-            />
-          </div>
+          <EarthSettings
+            earthNightDayAmount={earthNightDayAmount}
+            setEarthNightDay={setEarthNightDay}
+            earthCloudsAmount={earthCloudsAmount}
+            setEarthClouds={setEarthClouds}
+          />
         )}
       </div>
       <div id="infoContainer">
