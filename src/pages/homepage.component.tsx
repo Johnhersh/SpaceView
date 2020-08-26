@@ -71,12 +71,8 @@ function HomePage() {
 
   return (
     <div className="homepageContainer">
-      <NextPrevButton type="nextButton" clickFunction={onNextButtonPress}>
-        Next
-      </NextPrevButton>
-      <NextPrevButton type="previousButton" clickFunction={onPreviousButtonPress}>
-        Previous
-      </NextPrevButton>
+      <NextPrevButton type="nextButton" clickFunction={onNextButtonPress} />
+      <NextPrevButton type="previousButton" clickFunction={onPreviousButtonPress} />
       <InfoView
         title={activePlanet}
         earthNightDayAmount={earthNightDayAmount}
