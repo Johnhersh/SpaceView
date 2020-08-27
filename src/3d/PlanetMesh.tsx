@@ -28,16 +28,10 @@ const PlanetMesh = ({
 }: SpinningMeshProps) => {
   const mesh = useRef<THREE.Mesh>();
   const texture = useLoader(THREE.TextureLoader, texturePath);
-  const ringsTexture = useLoader(THREE.TextureLoader, ringsDefaultTexture);
+  let ringsPath = ringsDefaultTexture;
+  if (ringsTexturePath) ringsPath = ringsTexturePath;
+  const ringsTexture = useLoader(THREE.TextureLoader, ringsPath);
   const ringsTextureAlpha = useLoader(THREE.TextureLoader, ringsDefaultAlphaTexture);
-  if (ringsTexture) {
-    if (ringsTexturePath) {
-    }
-  }
-  // let ringsTexture: THREE.Texture;
-  // if (ringsTexturePath !== undefined) {
-  //   ringsTexture = useLoader(THREE.TextureLoader, ringsTexturePath);
-  // } else ringsTexture = useLoader(THREE.TextureLoader, ringsDefaultTexture);
 
   const radius = size;
   const segments = 32;
