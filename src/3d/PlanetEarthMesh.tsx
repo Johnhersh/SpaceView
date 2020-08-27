@@ -13,6 +13,7 @@ interface SpinningMeshProps {
   nightTexturePath: string;
   cloudsTexturePath: string;
   combineTextureTexturePath: string;
+  tilt: number;
 }
 
 const PlanetEarthMesh = ({
@@ -24,6 +25,7 @@ const PlanetEarthMesh = ({
   nightTexturePath,
   cloudsTexturePath,
   combineTextureTexturePath,
+  tilt,
 }: SpinningMeshProps) => {
   const mesh = useRef<THREE.Mesh>();
   const diffuseTexture = useLoader(THREE.TextureLoader, texturePath);
@@ -34,14 +36,16 @@ const PlanetEarthMesh = ({
 
   const radius = size;
   const segments = 32;
+  const rotationAxis = new THREE.Vector3(0, 1, 0);
+  tilt = -tilt * (Math.PI / 180); // Convert from degrees to radians
 
   useFrame(() => {
     if (mesh.current !== undefined) {
-      mesh.current.rotation.y = mesh.current.rotation.y += 0.005;
+      mesh.current.rotateOnAxis(rotationAxis, 0.005); // Doing this so I can rotate in local space and it'll work with the overall rotation
     }
   });
   return (
-    <mesh castShadow ref={mesh} position={position}>
+    <mesh castShadow ref={mesh} position={position} rotation={[0, 0, tilt]}>
       <sphereBufferGeometry attach="geometry" args={[radius, segments, segments]} />
       <EarthMaterial
         diffuse={diffuseTexture}

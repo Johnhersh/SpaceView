@@ -112,7 +112,7 @@ function HomePage() {
           <a.group position-x={spring}>
             <Suspense fallback={<Html>Loading</Html>}>
               {solarSystemData.map((planet, index) => {
-                if (planet.name === "Baby")
+                if (planet.name === "Earth")
                   return (
                     <PlanetEarthMesh
                       position={new Vector3(index * planetDistance, 0, 0)}
@@ -124,6 +124,7 @@ function HomePage() {
                       nightTexturePath={earthNightTexture}
                       cloudsTexturePath={earthCloudsTexture}
                       combineTextureTexturePath={earthCombineTexture}
+                      tilt={planet.tilt}
                     />
                   );
                 return (
