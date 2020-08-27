@@ -53,7 +53,7 @@ const PlanetMesh = ({
       {rings && (
         <mesh position={position}>
           <cylinderBufferGeometry attach="geometry" args={[1, ringsRadius, 0.01, 64, 12, true]} />
-          <meshBasicMaterial attach="material" map={ringsTexture} />
+          <meshBasicMaterial attach="material" map={ringsTexture} side={THREE.DoubleSide} />
         </mesh>
       )}
     </group>
