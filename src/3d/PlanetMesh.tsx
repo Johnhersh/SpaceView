@@ -14,6 +14,7 @@ interface SpinningMeshProps {
   rings?: boolean;
   ringsTexturePath?: string;
   size: number;
+  tilt: number;
 }
 
 const PlanetMesh = ({
@@ -23,6 +24,7 @@ const PlanetMesh = ({
   size,
   rings = false,
   ringsTexturePath,
+  tilt,
 }: SpinningMeshProps) => {
   const mesh = useRef<THREE.Mesh>();
   const texture = useLoader(THREE.TextureLoader, texturePath);
@@ -40,20 +42,24 @@ const PlanetMesh = ({
   const radius = size;
   const segments = 32;
   const ringsRadius = size * 2;
+  const rotationAxis = new THREE.Vector3(0, 1, 0);
+  tilt = -tilt * (Math.PI / 180); // Convert from degrees to radians
+
+  console.log(`tilt: ${tilt}`);
 
   useFrame(() => {
     if (mesh.current !== undefined) {
-      mesh.current.rotation.y = mesh.current.rotation.y += 0.005;
+      mesh.current.rotateOnAxis(rotationAxis, 0.005); // Doing this so I can rotate in local space and it'll work with the overall rotation
     }
   });
   return (
     <group>
-      <mesh castShadow ref={mesh} position={position}>
+      <mesh castShadow ref={mesh} position={position} rotation={[0, 0, tilt]}>
         <sphereBufferGeometry attach="geometry" args={[radius, segments, segments]} />
         <PlanetMaterial diffuse={texture} dissolveAmount={dissolveAmount} />
       </mesh>
       {rings && (
-        <mesh position={position}>
+        <mesh position={position} rotation={[0, 0, tilt]}>
           <cylinderBufferGeometry attach="geometry" args={[1, ringsRadius, 0.01, 64, 12, true]} />
           <meshBasicMaterial
             attach="material"

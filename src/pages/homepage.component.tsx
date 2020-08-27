@@ -24,14 +24,14 @@ import uranusTexture from "../3d/textures/Uranus_Diffuse.png";
 import neptuneTexture from "../3d/textures/Neptune_Diffuse.png";
 
 const solarSystemData = [
-  { name: "Mercury", texture: mercuryTexture, size: 0.5, rings: false },
-  { name: "Venus", texture: venusTexture, size: 1, rings: false },
-  { name: "Earth", texture: earthTexture, size: 1, rings: false },
-  { name: "Mars", texture: marsTexture, size: 0.75, rings: false },
-  { name: "Jupiter", texture: jupiterTexture, size: 1.75, rings: false },
-  { name: "Saturn", texture: saturnTexture, size: 1.75, rings: true },
-  { name: "Uranus", texture: uranusTexture, size: 1.2, rings: false },
-  { name: "Neptune", texture: neptuneTexture, size: 1.2, rings: false },
+  { name: "Mercury", texture: mercuryTexture, size: 0.5, rings: false, tilt: 2 },
+  { name: "Venus", texture: venusTexture, size: 1, rings: false, tilt: 117 },
+  { name: "Earth", texture: earthTexture, size: 1, rings: false, tilt: 23 },
+  { name: "Mars", texture: marsTexture, size: 0.75, rings: false, tilt: 25 },
+  { name: "Jupiter", texture: jupiterTexture, size: 1.75, rings: false, tilt: 3 },
+  { name: "Saturn", texture: saturnTexture, size: 1.75, rings: true, tilt: 26 },
+  { name: "Uranus", texture: uranusTexture, size: 1.2, rings: false, tilt: 98 },
+  { name: "Neptune", texture: neptuneTexture, size: 1.2, rings: false, tilt: 28 },
 ];
 
 softShadows({
@@ -47,7 +47,7 @@ function HomePage() {
   const [earthCloudsAmount, setEarthClouds] = useState(0);
   const [systemOffset, setSystemOffset] = useState(0);
   const [activePlanet, setActivePlanet] = useState(solarSystemData[0].name);
-  const planetDistance = 5;
+  const planetDistance = 7;
   const shadowSize = 40;
   const { spring } = useSpring({
     spring: systemOffset,
@@ -134,6 +134,7 @@ function HomePage() {
                     size={planet.size}
                     key={index}
                     rings={planet.rings}
+                    tilt={planet.tilt}
                   />
                 );
               })}
