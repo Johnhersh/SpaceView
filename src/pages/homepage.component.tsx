@@ -24,21 +24,21 @@ import uranusTexture from "../3d/textures/Uranus_Diffuse.png";
 import neptuneTexture from "../3d/textures/Neptune_Diffuse.png";
 
 const solarSystemData = [
-  { name: "Mercury", texture: mercuryTexture, size: 0.5 },
-  { name: "Venus", texture: venusTexture, size: 1 },
-  { name: "Earth", texture: earthTexture, size: 1 },
-  { name: "Mars", texture: marsTexture, size: 0.75 },
-  { name: "Jupiter", texture: jupiterTexture, size: 1.75 },
-  { name: "Saturn", texture: saturnTexture, size: 1.75 },
-  { name: "Uranus", texture: uranusTexture, size: 1.2 },
-  { name: "Neptune", texture: neptuneTexture, size: 1.2 },
+  { name: "Mercury", texture: mercuryTexture, size: 0.5, rings: false },
+  { name: "Venus", texture: venusTexture, size: 1, rings: false },
+  { name: "Earth", texture: earthTexture, size: 1, rings: false },
+  { name: "Mars", texture: marsTexture, size: 0.75, rings: false },
+  { name: "Jupiter", texture: jupiterTexture, size: 1.75, rings: false },
+  { name: "Saturn", texture: saturnTexture, size: 1.75, rings: true },
+  { name: "Uranus", texture: uranusTexture, size: 1.2, rings: false },
+  { name: "Neptune", texture: neptuneTexture, size: 1.2, rings: false },
 ];
 
 softShadows({
   frustrum: 3.75, // Frustrum width (default: 3.75)
   size: 0.01, // World size (default: 0.005)
   near: 11.5, // Near plane (default: 9.5)
-  samples: 28, // Samples (default: 17)
+  samples: 17, // Samples (default: 17)
   rings: 11, // Rings (default: 11)
 });
 
@@ -112,7 +112,7 @@ function HomePage() {
           <a.group position-x={spring}>
             <Suspense fallback={<Html>Loading</Html>}>
               {solarSystemData.map((planet, index) => {
-                if (planet.name === "Earth")
+                if (planet.name === "Baby")
                   return (
                     <PlanetEarthMesh
                       position={new Vector3(index * planetDistance, 0, 0)}
@@ -133,6 +133,7 @@ function HomePage() {
                     texturePath={planet.texture}
                     size={planet.size}
                     key={index}
+                    rings={planet.rings}
                   />
                 );
               })}
