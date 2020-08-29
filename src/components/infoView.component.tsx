@@ -3,6 +3,7 @@ import RangeSlider from "react-bootstrap-range-slider";
 import "./infoView.styles.scss";
 
 import EarthSettings from "./infoView-Earth.component";
+import VenusSettings from "./infoView-Venus.component";
 import planetData from "./infoView-planetData";
 
 interface InfoViewProps {
@@ -11,6 +12,8 @@ interface InfoViewProps {
   setNightDay: Function;
   earthCloudsAmount: number;
   setEarthClouds: Function;
+  venusWaterAmount: number;
+  setVenusWater: Function;
 }
 
 const InfoView: FunctionComponent<InfoViewProps> = ({
@@ -19,6 +22,8 @@ const InfoView: FunctionComponent<InfoViewProps> = ({
   setNightDay,
   earthCloudsAmount,
   setEarthClouds,
+  venusWaterAmount,
+  setVenusWater
 }) => {
   return (
     <div id="settingsContainer">
@@ -50,6 +55,9 @@ const InfoView: FunctionComponent<InfoViewProps> = ({
           </div>
           {title === "Earth" && (
             <EarthSettings earthCloudsAmount={earthCloudsAmount} setEarthClouds={setEarthClouds} />
+          )}
+          {title === "Venus" && (
+            <VenusSettings venusWaterAmount={venusWaterAmount} setVenusWater={setVenusWater}/>
           )}
         </div>
       </div>

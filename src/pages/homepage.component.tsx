@@ -10,6 +10,7 @@ import NextPrevButton from "../components/next-prevButton.component";
 import InfoView from "../components/infoView.component";
 import PlanetMesh from "../3d/PlanetMesh";
 import PlanetEarthMesh from "../3d/PlanetEarthMesh";
+import PlanetVenusMesh from "../3d/PlanetVenusMesh";
 
 import mercuryTexture from "../3d/textures/Mercury_Diffuse.png";
 import venusTexture from "../3d/textures/Venus_Diffuse.png";
@@ -45,6 +46,7 @@ softShadows({
 function HomePage() {
   const [globalNightDayAmount, setNightDay] = useState(0);
   const [earthCloudsAmount, setEarthClouds] = useState(0);
+  const [venusWaterAmount, setVenusWater] = useState(0);
   const [systemOffset, setSystemOffset] = useState(0);
   const [activePlanet, setActivePlanet] = useState(solarSystemData[0].name);
   const planetDistance = 7;
@@ -79,6 +81,8 @@ function HomePage() {
         setNightDay={setNightDay}
         earthCloudsAmount={earthCloudsAmount}
         setEarthClouds={setEarthClouds}
+        venusWaterAmount={venusWaterAmount}
+        setVenusWater={setVenusWater}
       />
       <div className="canvasContainer">
         <Canvas
@@ -125,6 +129,17 @@ function HomePage() {
                       cloudsTexturePath={earthCloudsTexture}
                       combineTextureTexturePath={earthCombineTexture}
                       tilt={planet.tilt}
+                    />
+                  );
+                if (planet.name === "Venus")
+                  return (
+                    <PlanetVenusMesh
+                      position={new Vector3(index * planetDistance, 0, 0)}
+                      dayNightBlend={globalNightDayAmount}
+                      texturePath={planet.texture}
+                      size={planet.size}
+                      tilt={planet.tilt}
+                      waterAmount={venusWaterAmount}
                     />
                   );
                 return (
