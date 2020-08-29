@@ -52,7 +52,7 @@ void main() {
     vec4 texAlt = texture2D(tDiffuseAlt, uv);
     
     /** Dissolve */
-    float softness = 0.5;
+    float softness = 0.25;
     float scaleAndOffset = (cloudsDissolve * softness) + cloudsDissolve;
     scaleAndOffset *= pow(combineMap.g, 3.0);
     float minValue = scaleAndOffset - softness;
@@ -108,16 +108,14 @@ export default function PlanetMaterial({
     tDiffuseAlt: { value: diffuseNight },
     tClouds: { value: cloudsTexture },
     tCombineMap: { value: combineTexture },
-    cloudsDissolve: { value: cloudsDissolveAmount },
-    nightMode: { value: dayNightBlend },
+    cloudsDissolve: { value: cloudsDissolveAmount / 80 },
+    nightMode: { value: dayNightBlend / 100 },
     u_time: { value: u_time.current },
     lightPosition: { value: new THREE.Vector3(2, 2, 2) },
   };
 
   useFrame((_state, delta) => {
     if (material.current !== (undefined || null)) {
-      uniforms.cloudsDissolve = { value: cloudsDissolveAmount / 80 };
-      uniforms.nightMode = { value: dayNightBlend / 100 };
       u_time.current += delta * 0.02;
       uniforms.u_time = { value: u_time.current };
     }
