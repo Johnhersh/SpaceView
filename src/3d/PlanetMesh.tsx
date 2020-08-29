@@ -39,8 +39,6 @@ const PlanetMesh = ({
   const rotationAxis = new THREE.Vector3(0, 1, 0);
   tilt = -tilt * (Math.PI / 180); // Convert from degrees to radians
 
-  console.log(`tilt: ${tilt}`);
-
   useFrame(() => {
     if (mesh.current !== undefined) {
       mesh.current.rotateOnAxis(rotationAxis, 0.005); // Doing this so I can rotate in local space and it'll work with the overall rotation

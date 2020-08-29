@@ -140,6 +140,7 @@ function HomePage() {
                       size={planet.size}
                       tilt={planet.tilt}
                       waterAmount={venusWaterAmount}
+                      key={index}
                     />
                   );
                 return (
