@@ -86,7 +86,7 @@ function HomePage() {
       />
       <div className="canvasContainer">
         <Canvas
-          gl={{ antialias: true }}
+          gl={{ antialias: true, powerPreference: "high-performance" }}
           colorManagement={true}
           camera={{ position: [-5, 2, 10], fov: 60 }}
           shadowMap
@@ -96,8 +96,8 @@ function HomePage() {
             castShadow
             position={[0, 10, 0]}
             intensity={1.5}
-            shadow-mapSize-width={4096}
-            shadow-mapSize-height={4096}
+            shadow-mapSize-width={1024}
+            shadow-mapSize-height={1024}
             shadow-camera-near={-shadowSize}
             shadow-camera-far={shadowSize}
             shadow-camera-left={-shadowSize}
@@ -105,8 +105,6 @@ function HomePage() {
             shadow-camera-top={10}
             shadow-camera-bottom={-10}
           />
-          <pointLight position={[-10, 0, -20]} intensity={0.5} />
-          <pointLight position={[0, -10, 0]} intensity={1.5} />
           <group>
             <mesh receiveShadow rotation={[-Math.PI / 2, 0, 0]} position={[0, -5, 35]}>
               <planeBufferGeometry attach="geometry" args={[500, 500]} />
