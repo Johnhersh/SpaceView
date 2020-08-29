@@ -9,7 +9,7 @@ import ringsDefaultAlphaTexture from "./textures/Rings_Default_Alpha.png";
 
 interface SpinningMeshProps {
   position: THREE.Vector3;
-  dissolveAmount: number;
+  dayNightBlend: number;
   texturePath: string;
   rings?: boolean;
   ringsTexturePath?: string;
@@ -19,7 +19,7 @@ interface SpinningMeshProps {
 
 const PlanetMesh = ({
   position,
-  dissolveAmount,
+  dayNightBlend,
   texturePath,
   size,
   rings = false,
@@ -50,7 +50,7 @@ const PlanetMesh = ({
     <group>
       <mesh castShadow ref={mesh} position={position} rotation={[0, 0, tilt]}>
         <sphereBufferGeometry attach="geometry" args={[radius, segments, segments]} />
-        <PlanetMaterial diffuse={texture} dissolveAmount={dissolveAmount} />
+        <PlanetMaterial diffuse={texture} dayNightBlend={dayNightBlend} />
       </mesh>
       {rings && (
         <mesh position={position} rotation={[0, 0, tilt]}>

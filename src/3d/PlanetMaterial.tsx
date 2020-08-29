@@ -1,3 +1,4 @@
+import * as THREE from "three";
 import React, { useRef } from "react";
 import { Texture, NormalBlending, ShaderMaterial } from "three";
 import { useFrame } from "react-three-fiber";
@@ -8,10 +9,14 @@ precision highp float;
 precision highp int;
 
 varying vec2 vUv;
+varying vec3 vNormal;
+varying vec3 vPosition;
 
 void main() {
-  vUv = uv;
-  gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+    vNormal = normal;
+    vPosition = position;
+    vUv = uv;
+    gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
 }
 `;
 
@@ -20,39 +25,58 @@ const fragmentShader = `
 precision highp float;
 precision highp int;
 
+// Actual shader below:
+
 varying vec2 vUv;
+varying vec3 vNormal;
+varying vec3 vPosition;
+
+uniform mat4 modelMatrix;
+
 uniform sampler2D tDiffuse;
-uniform float dissolveAmount;
+uniform vec3 lightPosition;
+uniform float nightMode;
 
 void main() {
+    /** Variables used later */
+    // UV coordinates from vertex shader
     vec2 uv = vUv;
-    float softness = 0.5;
-    float scaleAndOffset = (dissolveAmount * softness) + dissolveAmount;
-    float minValue = scaleAndOffset - softness;
-    float maxValue = scaleAndOffset;
+    // Calculate the normal including the model rotation and scale
+    vec3 worldNormal = normalize( vec3( modelMatrix * vec4( vNormal, 0.0 ) ) );
+    // Calculate the real position of this pixel in 3d space, taking into account
+    // the rotation and scale of the model.
+    vec3 worldPosition = ( modelMatrix * vec4( vPosition, 1.0 )).xyz;
     vec4 tex = texture2D(tDiffuse, uv);
-    float dissolve = smoothstep(minValue, maxValue, tex.r);
-    vec4 finalColor = vec4(tex.rgb, dissolve);
-    gl_FragColor = vec4( finalColor );
+    
+    /** Lambertian brightness */
+    vec3 lightVector = normalize(lightPosition - worldPosition);
+    float brightness = dot( worldNormal, lightVector );
+
+    
+    /** Final result */
+    vec4 shaded = vec4(tex.rgb * brightness, 1);
+    vec4 dayNight = mix(tex, shaded, nightMode);
+    gl_FragColor = vec4( dayNight );
 }
 `;
 
 interface PlanetMaterialProps {
   diffuse: Texture;
-  dissolveAmount: number;
+  dayNightBlend: number;
 }
 
-export default function PlanetMaterial({ diffuse, dissolveAmount }: PlanetMaterialProps) {
+export default function PlanetMaterial({ diffuse, dayNightBlend }: PlanetMaterialProps) {
   const material = useRef<typeof ShaderMaterial>(null);
 
   const uniforms = {
     tDiffuse: { value: diffuse },
-    dissolveAmount: { value: dissolveAmount },
+    nightMode: { value: dayNightBlend },
+    lightPosition: { value: new THREE.Vector3(2, 2, 2) },
   };
 
   useFrame(() => {
     if (material.current !== (undefined || null)) {
-      uniforms.dissolveAmount = { value: dissolveAmount / 100 };
+      uniforms.nightMode = { value: dayNightBlend / 100 };
     }
   });
 

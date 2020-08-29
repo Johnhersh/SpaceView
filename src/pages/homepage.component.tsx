@@ -130,7 +130,7 @@ function HomePage() {
                 return (
                   <PlanetMesh
                     position={new Vector3(index * planetDistance, 0, 0)}
-                    dissolveAmount={globalNightDayAmount}
+                    dayNightBlend={globalNightDayAmount}
                     texturePath={planet.texture}
                     size={planet.size}
                     key={index}
