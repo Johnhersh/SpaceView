@@ -27,7 +27,7 @@ uniform sampler2D tDiffuseAlt;
 uniform sampler2D tClouds;
 uniform sampler2D tCombineMap; // Spec in R, cloud-movement in G
 uniform float cloudsDissolve;
-uniform float bNightMode;
+uniform float nightMode;
 uniform float u_time;
 uniform float time;
 uniform vec3 lightPosition;
@@ -58,11 +58,10 @@ void main() {
     float minValue = scaleAndOffset - softness;
     float maxValue = scaleAndOffset;
     float cloudsValue = 1.0 - smoothstep(minValue, maxValue, clouds.r);
-    cloudsValue = cloudsValue * (pow(combineMap.g, 2.0)+0.5);
     
     /** Specular */
     vec3 directionToCamera = normalize(cameraPosition - worldPosition);
-    float specularAmount = 0.8 * combineMap.r;
+    float specularAmount = 0.7 * combineMap.r;
     float specularShininess = 64.0;
     vec3 halfwayVector = normalize( directionToCamera + lightPosition);
     float specularDot = max(0.0, dot(worldNormal, halfwayVector));
@@ -77,7 +76,7 @@ void main() {
     vec4 blendDayNight = mix(texAlt, tex, brightness);
     blendDayNight = vec4(blendDayNight + specularBrightness);
     blendDayNight = mix(blendDayNight, vec4(1,1,1,1), cloudsValue*brightness); // Add clouds in
-    vec4 blendResult = mix(tex, blendDayNight, bNightMode);
+    vec4 blendResult = mix(tex, blendDayNight, nightMode);
     
     // blendResult.a = 1.0;
     gl_FragColor = vec4( vec3(blendResult), 1.0 );
@@ -110,7 +109,7 @@ export default function PlanetMaterial({
     tClouds: { value: cloudsTexture },
     tCombineMap: { value: combineTexture },
     cloudsDissolve: { value: cloudsDissolveAmount },
-    bNightMode: { value: dayNightBlend },
+    nightMode: { value: dayNightBlend },
     u_time: { value: u_time.current },
     lightPosition: { value: new THREE.Vector3(2, 2, 2) },
   };
@@ -118,7 +117,7 @@ export default function PlanetMaterial({
   useFrame((_state, delta) => {
     if (material.current !== (undefined || null)) {
       uniforms.cloudsDissolve = { value: cloudsDissolveAmount / 80 };
-      uniforms.bNightMode = { value: dayNightBlend / 100 };
+      uniforms.nightMode = { value: dayNightBlend / 100 };
       u_time.current += delta * 0.02;
       uniforms.u_time = { value: u_time.current };
     }
