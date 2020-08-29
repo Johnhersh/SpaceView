@@ -1,4 +1,5 @@
 import React, { FunctionComponent } from "react";
+import RangeSlider from "react-bootstrap-range-slider";
 import "./infoView.styles.scss";
 
 import EarthSettings from "./infoView-Earth.component";
@@ -6,16 +7,16 @@ import planetData from "./infoView-planetData";
 
 interface InfoViewProps {
   title: string;
-  earthNightDayAmount: number;
-  setEarthNightDay: Function;
+  globalNightDayAmount: number;
+  setNightDay: Function;
   earthCloudsAmount: number;
   setEarthClouds: Function;
 }
 
 const InfoView: FunctionComponent<InfoViewProps> = ({
   title,
-  earthNightDayAmount,
-  setEarthNightDay,
+  globalNightDayAmount,
+  setNightDay,
   earthCloudsAmount,
   setEarthClouds,
 }) => {
@@ -38,13 +39,17 @@ const InfoView: FunctionComponent<InfoViewProps> = ({
           </p>
         </div>
         <div id="mainSettingsSection">
-          {title === "Earth" && (
-            <EarthSettings
-              earthNightDayAmount={earthNightDayAmount}
-              setEarthNightDay={setEarthNightDay}
-              earthCloudsAmount={earthCloudsAmount}
-              setEarthClouds={setEarthClouds}
+          <div className="sliderContainer">
+            <h3>Night:</h3>
+            <RangeSlider
+              value={globalNightDayAmount}
+              onChange={(changeEvent: any) => setNightDay(changeEvent.target.value)}
+              variant="primary"
+              tooltip="off"
             />
+          </div>
+          {title === "Earth" && (
+            <EarthSettings earthCloudsAmount={earthCloudsAmount} setEarthClouds={setEarthClouds} />
           )}
         </div>
       </div>

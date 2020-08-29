@@ -43,7 +43,7 @@ softShadows({
 });
 
 function HomePage() {
-  const [earthNightDayAmount, setEarthNightDay] = useState(0);
+  const [globalNightDayAmount, setNightDay] = useState(0);
   const [earthCloudsAmount, setEarthClouds] = useState(0);
   const [systemOffset, setSystemOffset] = useState(0);
   const [activePlanet, setActivePlanet] = useState(solarSystemData[0].name);
@@ -75,8 +75,8 @@ function HomePage() {
       <NextPrevButton type="previousButton" clickFunction={onPreviousButtonPress} />
       <InfoView
         title={activePlanet}
-        earthNightDayAmount={earthNightDayAmount}
-        setEarthNightDay={setEarthNightDay}
+        globalNightDayAmount={globalNightDayAmount}
+        setNightDay={setNightDay}
         earthCloudsAmount={earthCloudsAmount}
         setEarthClouds={setEarthClouds}
       />
@@ -116,7 +116,7 @@ function HomePage() {
                   return (
                     <PlanetEarthMesh
                       position={new Vector3(index * planetDistance, 0, 0)}
-                      dissolveAmount={earthNightDayAmount}
+                      dissolveAmount={globalNightDayAmount}
                       cloudsDissolveAmount={earthCloudsAmount}
                       texturePath={planet.texture}
                       size={planet.size}
@@ -130,7 +130,7 @@ function HomePage() {
                 return (
                   <PlanetMesh
                     position={new Vector3(index * planetDistance, 0, 0)}
-                    dissolveAmount={0}
+                    dissolveAmount={globalNightDayAmount}
                     texturePath={planet.texture}
                     size={planet.size}
                     key={index}
