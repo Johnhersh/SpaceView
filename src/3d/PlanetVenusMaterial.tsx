@@ -64,9 +64,9 @@ void main() {
     
     
     /** Final result */
-    vec4 shaded = vec4(tex.rgb * brightness, 1);
-    vec4 dayNight = mix(tex, shaded, nightMode);
-    vec4 finalBlend = mix(dayNight, vec4(waterColor + specularBrightness, 1.0), waterValue);
+    vec4 blendWater = mix(tex, vec4(waterColor + specularBrightness, 1.0), waterValue);
+    vec4 shaded = vec4(blendWater.rgb * brightness, 1.0);
+    vec4 finalBlend = mix(blendWater, shaded, nightMode);
     gl_FragColor = vec4( finalBlend );
 }
 `;
