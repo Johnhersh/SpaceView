@@ -8,7 +8,7 @@ import { a } from "@react-spring/three";
 
 import NextPrevButton from "../components/next-prevButton.component";
 import InfoView from "../components/infoView.component";
-import PlanetMesh from "../3d/PlanetMesh";
+import PlanetGenericMesh from "../3d/PlanetGenericMesh";
 import PlanetEarthMesh from "../3d/PlanetEarthMesh";
 import PlanetVenusMesh from "../3d/PlanetVenusMesh";
 
@@ -118,7 +118,7 @@ function HomePage() {
                   return (
                     <PlanetEarthMesh
                       position={new Vector3(index * planetDistance, 0, 0)}
-                      dissolveAmount={globalNightDayAmount}
+                      dayNightAmount={globalNightDayAmount}
                       cloudsDissolveAmount={earthCloudsAmount}
                       texturePath={planet.texture}
                       size={planet.size}
@@ -142,9 +142,9 @@ function HomePage() {
                     />
                   );
                 return (
-                  <PlanetMesh
+                  <PlanetGenericMesh
                     position={new Vector3(index * planetDistance, 0, 0)}
-                    dayNightBlend={globalNightDayAmount}
+                    dayNightAmount={globalNightDayAmount}
                     texturePath={planet.texture}
                     size={planet.size}
                     key={index}

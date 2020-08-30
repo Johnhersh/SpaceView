@@ -83,7 +83,7 @@ void main() {
 }
 `;
 
-interface PlanetMaterialProps {
+interface PlanetEarthMaterialProps {
   diffuse: Texture;
   diffuseNight: Texture;
   cloudsTexture: Texture;
@@ -99,7 +99,7 @@ export default function PlanetMaterial({
   combineTexture,
   cloudsDissolveAmount,
   dayNightBlend,
-}: PlanetMaterialProps) {
+}: PlanetEarthMaterialProps) {
   const material = useRef<typeof ShaderMaterial>(null);
   const u_time = useRef(0);
 

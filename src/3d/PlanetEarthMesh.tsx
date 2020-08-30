@@ -1,12 +1,13 @@
 import * as THREE from "three";
-import React, { useRef } from "react";
-import { useFrame, useLoader } from "react-three-fiber";
+import React from "react";
+import { useLoader } from "react-three-fiber";
 
+import PlanetMesh from "./PlanetMesh";
 import EarthMaterial from "./EarthMaterial";
 
 interface SpinningMeshProps {
   position: THREE.Vector3;
-  dissolveAmount: number;
+  dayNightAmount: number;
   cloudsDissolveAmount: number;
   texturePath: string;
   size: number;
@@ -18,7 +19,7 @@ interface SpinningMeshProps {
 
 const PlanetEarthMesh = ({
   position,
-  dissolveAmount,
+  dayNightAmount,
   cloudsDissolveAmount,
   texturePath,
   size,
@@ -27,35 +28,28 @@ const PlanetEarthMesh = ({
   combineTextureTexturePath,
   tilt,
 }: SpinningMeshProps) => {
-  const mesh = useRef<THREE.Mesh>();
   const diffuseTexture = useLoader(THREE.TextureLoader, texturePath);
   const nightTexture = useLoader(THREE.TextureLoader, nightTexturePath);
   const cloudsTexture = useLoader(THREE.TextureLoader, cloudsTexturePath);
   const combineTexture = useLoader(THREE.TextureLoader, combineTextureTexturePath);
   cloudsTexture.wrapS = THREE.RepeatWrapping;
 
-  const radius = size;
-  const segments = 32;
-  const rotationAxis = new THREE.Vector3(0, 1, 0);
-  tilt = -tilt * (Math.PI / 180); // Convert from degrees to radians
-
-  useFrame(() => {
-    if (mesh.current !== undefined) {
-      mesh.current.rotateOnAxis(rotationAxis, 0.005); // Doing this so I can rotate in local space and it'll work with the overall rotation
-    }
-  });
   return (
-    <mesh castShadow ref={mesh} position={position} rotation={[0, 0, tilt]}>
-      <sphereBufferGeometry attach="geometry" args={[radius, segments, segments]} />
-      <EarthMaterial
-        diffuse={diffuseTexture}
-        diffuseNight={nightTexture}
-        cloudsTexture={cloudsTexture}
-        cloudsDissolveAmount={cloudsDissolveAmount}
-        dayNightBlend={dissolveAmount}
-        combineTexture={combineTexture}
-      />
-    </mesh>
+    <PlanetMesh
+      position={position}
+      size={size}
+      tilt={tilt}
+      material={
+        <EarthMaterial
+          diffuse={diffuseTexture}
+          diffuseNight={nightTexture}
+          cloudsTexture={cloudsTexture}
+          cloudsDissolveAmount={cloudsDissolveAmount}
+          dayNightBlend={dayNightAmount}
+          combineTexture={combineTexture}
+        />
+      }
+    />
   );
 };
 
