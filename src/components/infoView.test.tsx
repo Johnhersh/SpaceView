@@ -5,7 +5,7 @@ import Adapter from "enzyme-adapter-react-16";
 
 import InfoView from "./infoView.component";
 import EarthSettings from "./infoView-Earth.component";
-import VenusSettings from "./infoView-Water.component";
+import WaterSettings from "./infoView-Water.component";
 
 configure({ adapter: new Adapter() });
 
@@ -28,8 +28,16 @@ describe("<PlanetMesh/>", () => {
     wrapper.setProps({ title: "Earth" });
     expect(wrapper.find(EarthSettings)).toHaveLength(1);
   });
-  it("should render an VenusSettings component", () => {
+  it("should render a WaterSettings component", () => {
     wrapper.setProps({ title: "Venus" });
-    expect(wrapper.find(VenusSettings)).toHaveLength(1);
+    expect(wrapper.find(WaterSettings)).toHaveLength(1);
+  });
+  it("should render a WaterSettings component", () => {
+    wrapper.setProps({ title: "Mars" });
+    expect(wrapper.find(WaterSettings)).toHaveLength(1);
+  });
+  it("should not have a WaterSettings component", () => {
+    wrapper.setProps({ title: "Jupiter" });
+    expect(wrapper.find(WaterSettings)).toHaveLength(0);
   });
 });
