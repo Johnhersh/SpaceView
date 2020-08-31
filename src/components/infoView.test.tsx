@@ -5,7 +5,7 @@ import Adapter from "enzyme-adapter-react-16";
 
 import InfoView from "./infoView.component";
 import EarthSettings from "./infoView-Earth.component";
-import VenusSettings from "./infoView-Venus.component";
+import VenusSettings from "./infoView-Water.component";
 
 configure({ adapter: new Adapter() });
 
@@ -19,6 +19,8 @@ describe("<PlanetMesh/>", () => {
       setEarthClouds={() => {}}
       venusWaterAmount={1}
       setVenusWater={() => {}}
+      marsWaterAmount={1}
+      setMarsWater={() => {}}
     />
   );
 

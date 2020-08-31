@@ -47,6 +47,7 @@ function HomePage() {
   const [globalNightDayAmount, setNightDay] = useState(0);
   const [earthCloudsAmount, setEarthClouds] = useState(0);
   const [venusWaterAmount, setVenusWater] = useState(0);
+  const [marsWaterAmount, setMarsWater] = useState(0);
   const [systemOffset, setSystemOffset] = useState(0);
   const [activePlanet, setActivePlanet] = useState(solarSystemData[0].name);
   const planetDistance = 7;
@@ -83,6 +84,8 @@ function HomePage() {
         setEarthClouds={setEarthClouds}
         venusWaterAmount={venusWaterAmount}
         setVenusWater={setVenusWater}
+        marsWaterAmount={marsWaterAmount}
+        setMarsWater={setMarsWater}
       />
       <div className="canvasContainer">
         <Canvas
@@ -129,7 +132,7 @@ function HomePage() {
                       tilt={planet.tilt}
                     />
                   );
-                if (planet.name === "Venus" || planet.name === "Mars")
+                if (planet.name === "Venus")
                   return (
                     <PlanetWaterMesh
                       position={new Vector3(index * planetDistance, 0, 0)}
@@ -138,6 +141,18 @@ function HomePage() {
                       size={planet.size}
                       tilt={planet.tilt}
                       waterAmount={venusWaterAmount}
+                      key={index}
+                    />
+                  );
+                if (planet.name === "Mars")
+                  return (
+                    <PlanetWaterMesh
+                      position={new Vector3(index * planetDistance, 0, 0)}
+                      dayNightBlend={globalNightDayAmount}
+                      texturePath={planet.texture}
+                      size={planet.size}
+                      tilt={planet.tilt}
+                      waterAmount={marsWaterAmount}
                       key={index}
                     />
                   );
