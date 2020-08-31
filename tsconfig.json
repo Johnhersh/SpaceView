@@ -16,7 +16,8 @@
     "noUnusedParameters": true,
     "noUnusedLocals": true,
     "jsx": "react",
-    "typeRoots": ["/src/custom_typings/"]
+    "typeRoots": ["/src/custom_typings/"],
+    "types": ["@types/jest"]
   },
   "include": ["src"]
 }

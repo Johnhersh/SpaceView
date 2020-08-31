@@ -1,5 +1,5 @@
-import * as THREE from "three";
 import React, { useRef } from "react";
+import * as THREE from "three";
 import { useFrame, useLoader } from "react-three-fiber";
 
 import ringsDefaultTexture from "./textures/Rings_Default.png";

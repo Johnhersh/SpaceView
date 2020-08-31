@@ -23,7 +23,7 @@ const InfoView: FunctionComponent<InfoViewProps> = ({
   earthCloudsAmount,
   setEarthClouds,
   venusWaterAmount,
-  setVenusWater
+  setVenusWater,
 }) => {
   return (
     <div id="settingsContainer">
@@ -57,7 +57,7 @@ const InfoView: FunctionComponent<InfoViewProps> = ({
             <EarthSettings earthCloudsAmount={earthCloudsAmount} setEarthClouds={setEarthClouds} />
           )}
           {title === "Venus" && (
-            <VenusSettings venusWaterAmount={venusWaterAmount} setVenusWater={setVenusWater}/>
+            <VenusSettings venusWaterAmount={venusWaterAmount} setVenusWater={setVenusWater} />
           )}
         </div>
       </div>
