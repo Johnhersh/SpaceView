@@ -3,7 +3,7 @@ import React from "react";
 import { useLoader } from "react-three-fiber";
 
 import PlanetMesh from "./PlanetMesh";
-import PlanetVenusMaterial from "./PlanetVenusMaterial";
+import PlanetWaterMaterial from "./PlanetWaterMaterial";
 
 interface VenusMeshProps {
   position: THREE.Vector3;
@@ -30,7 +30,7 @@ const PlanetVenusMesh = ({
       size={size}
       tilt={tilt}
       material={
-        <PlanetVenusMaterial
+        <PlanetWaterMaterial
           diffuse={texture}
           dayNightBlend={dayNightBlend}
           waterAmount={waterAmount}

@@ -10,7 +10,7 @@ import NextPrevButton from "../components/next-prevButton.component";
 import InfoView from "../components/infoView.component";
 import PlanetGenericMesh from "../3d/PlanetGenericMesh";
 import PlanetEarthMesh from "../3d/PlanetEarthMesh";
-import PlanetVenusMesh from "../3d/PlanetVenusMesh";
+import PlanetWaterMesh from "../3d/PlanetWaterMesh";
 
 import mercuryTexture from "../3d/textures/Mercury_Diffuse.png";
 import venusTexture from "../3d/textures/Venus_Diffuse.png";
@@ -129,9 +129,9 @@ function HomePage() {
                       tilt={planet.tilt}
                     />
                   );
-                if (planet.name === "Venus")
+                if (planet.name === "Venus" || planet.name === "Mars")
                   return (
-                    <PlanetVenusMesh
+                    <PlanetWaterMesh
                       position={new Vector3(index * planetDistance, 0, 0)}
                       dayNightBlend={globalNightDayAmount}
                       texturePath={planet.texture}

@@ -71,17 +71,17 @@ void main() {
 }
 `;
 
-interface PlanetMaterialProps {
+interface PlanetWaterMaterialProps {
   diffuse: Texture;
   dayNightBlend: number;
   waterAmount: number;
 }
 
-export default function PlanetVenusMaterial({
+export default function PlanetWaterMaterial({
   diffuse,
   dayNightBlend,
   waterAmount,
-}: PlanetMaterialProps) {
+}: PlanetWaterMaterialProps) {
   const material = useRef<typeof ShaderMaterial>(null);
 
   const uniforms = {
