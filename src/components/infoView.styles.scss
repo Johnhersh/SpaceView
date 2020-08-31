@@ -75,3 +75,17 @@ h1 {
 p {
   margin-bottom: 0em;
 }
+
+h3 {
+  font-size: small;
+  color: var(--color-text);
+}
+
+.sliderContainer {
+  display: inherit;
+  align-items: center;
+}
+
+.range-slider {
+  margin-left: 0.5em;
+}

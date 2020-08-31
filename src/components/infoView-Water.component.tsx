@@ -1,8 +1,6 @@
 import React, { FunctionComponent } from "react";
 import RangeSlider from "react-bootstrap-range-slider";
 
-import "./infoView-Earth.styles.scss";
-
 interface VenusSettingsProps {
   venusWaterAmount: number;
   setVenusWater: Function;
