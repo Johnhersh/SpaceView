@@ -11,7 +11,7 @@ configure({ adapter: new Adapter() });
 
 describe("<PlanetMesh/>", () => {
   const mockDayNightSlider = jest.fn();
-  let wrapper = shallow(
+  const wrapper = shallow(
     <InfoView
       title="Mercury"
       globalNightDayAmount={1}
