@@ -10,11 +10,12 @@ import WaterSettings from "./infoView-Water.component";
 configure({ adapter: new Adapter() });
 
 describe("<PlanetMesh/>", () => {
+  const mockDayNightSlider = jest.fn();
   let wrapper = shallow(
     <InfoView
       title="Mercury"
       globalNightDayAmount={1}
-      setNightDay={() => {}}
+      setNightDay={mockDayNightSlider}
       earthCloudsAmount={1}
       setEarthClouds={() => {}}
       venusWaterAmount={1}
@@ -39,5 +40,15 @@ describe("<PlanetMesh/>", () => {
   it("should not have a WaterSettings component", () => {
     wrapper.setProps({ title: "Jupiter" });
     expect(wrapper.find(WaterSettings)).toHaveLength(0);
+  });
+
+  describe("when the user slides the day/night slider", () => {
+    beforeEach(() => {
+      wrapper.find(".dayNightSlider").simulate("change", { target: { value: 50 } });
+    });
+
+    it("dispatches the setDayNight function with the value from the day/night slider", () => {
+      expect(mockDayNightSlider).toHaveBeenCalledWith(50);
+    });
   });
 });

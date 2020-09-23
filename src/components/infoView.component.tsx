@@ -55,6 +55,7 @@ const InfoView: FunctionComponent<InfoViewProps> = ({
               onChange={(changeEvent: any) => setNightDay(changeEvent.target.value)}
               variant="primary"
               tooltip="off"
+              className="dayNightSlider"
             />
           </div>
           {title === "Earth" && (
