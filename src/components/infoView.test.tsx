@@ -1,15 +1,12 @@
 import React from "react";
 
-import { configure, shallow } from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
+import { shallow } from "enzyme";
 
 import InfoView from "./infoView.component";
 import EarthSettings from "./infoView-Earth.component";
 import WaterSettings from "./infoView-Water.component";
 
-configure({ adapter: new Adapter() });
-
-describe("<PlanetMesh/>", () => {
+describe("InfoView component", () => {
   const mockDayNightSlider = jest.fn();
   const wrapper = shallow(
     <InfoView

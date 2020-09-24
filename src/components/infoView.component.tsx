@@ -32,7 +32,9 @@ const InfoView: FunctionComponent<InfoViewProps> = ({
   return (
     <div id="settingsContainer">
       <div id="infoViewHeader">
-        <h2 style={{ textAlign: "center" }}>{title}</h2>
+        <h2 id="infoViewTitle" style={{ textAlign: "center" }}>
+          {title}
+        </h2>
       </div>
       <div id="infoViewContent">
         <div id="infoContainer">
@@ -48,7 +50,7 @@ const InfoView: FunctionComponent<InfoViewProps> = ({
           </p>
         </div>
         <div id="mainSettingsSection">
-          <div className="sliderContainer">
+          <div id="sliderContainer">
             <h3>Night:</h3>
             <RangeSlider
               value={globalNightDayAmount}
