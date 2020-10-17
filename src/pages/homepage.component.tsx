@@ -1,23 +1,17 @@
 import React, { Suspense, useState } from "react";
 import "./homepage.styles.scss";
 import { Canvas } from "react-three-fiber";
-import { Vector3 } from "three";
 import { softShadows, OrbitControls, Html } from "drei";
 import { useSpring } from "@react-spring/core";
 import { a } from "@react-spring/three";
 
 import NextPrevButton from "../components/next-prevButton.component";
 import InfoView from "../components/infoView.component";
-import PlanetGenericMesh from "../3d/PlanetGenericMesh";
-import PlanetEarthMesh from "../3d/PlanetEarthMesh";
-import PlanetWaterMesh from "../3d/PlanetWaterMesh";
+import PlanetWrapper from "../components/planetWrapper.component";
 
 import mercuryTexture from "../3d/textures/Mercury_Diffuse.png";
 import venusTexture from "../3d/textures/Venus_Diffuse.png";
 import earthTexture from "../3d/textures/Earth_Diffuse.png";
-import earthNightTexture from "../3d/textures/Earth/Earth_Night_Diffuse.png";
-import earthCloudsTexture from "../3d/textures/Earth/Earth_Clouds.png";
-import earthCombineTexture from "../3d/textures/Earth/Earth_Combine.png";
 import marsTexture from "../3d/textures/Mars_Diffuse.png";
 import jupiterTexture from "../3d/textures/Jupiter_Diffuse.png";
 import saturnTexture from "../3d/textures/Saturn_Diffuse.png";
@@ -92,8 +86,7 @@ function HomePage() {
           gl={{ antialias: true, powerPreference: "high-performance" }}
           colorManagement={true}
           camera={{ position: [-5, 2, 10], fov: 60 }}
-          shadowMap
-        >
+          shadowMap>
           <ambientLight intensity={0.3} />
           <directionalLight
             castShadow
@@ -117,54 +110,19 @@ function HomePage() {
           <a.group position-x={spring}>
             <Suspense fallback={<Html>Loading</Html>}>
               {solarSystemData.map((planet, index) => {
-                if (planet.name === "Earth")
-                  return (
-                    <PlanetEarthMesh
-                      position={new Vector3(index * planetDistance, 0, 0)}
-                      dayNightAmount={globalNightDayAmount}
-                      cloudsDissolveAmount={earthCloudsAmount}
-                      texturePath={planet.texture}
-                      size={planet.size}
-                      key={index}
-                      nightTexturePath={earthNightTexture}
-                      cloudsTexturePath={earthCloudsTexture}
-                      combineTextureTexturePath={earthCombineTexture}
-                      tilt={planet.tilt}
-                    />
-                  );
-                if (planet.name === "Venus")
-                  return (
-                    <PlanetWaterMesh
-                      position={new Vector3(index * planetDistance, 0, 0)}
-                      dayNightBlend={globalNightDayAmount}
-                      texturePath={planet.texture}
-                      size={planet.size}
-                      tilt={planet.tilt}
-                      waterAmount={venusWaterAmount}
-                      key={index}
-                    />
-                  );
-                if (planet.name === "Mars")
-                  return (
-                    <PlanetWaterMesh
-                      position={new Vector3(index * planetDistance, 0, 0)}
-                      dayNightBlend={globalNightDayAmount}
-                      texturePath={planet.texture}
-                      size={planet.size}
-                      tilt={planet.tilt}
-                      waterAmount={marsWaterAmount}
-                      key={index}
-                    />
-                  );
                 return (
-                  <PlanetGenericMesh
-                    position={new Vector3(index * planetDistance, 0, 0)}
-                    dayNightAmount={globalNightDayAmount}
-                    texturePath={planet.texture}
+                  <PlanetWrapper
+                    planetName={planet.name}
+                    index={index}
+                    planetDistance={planetDistance}
+                    globalNightDayAmount={globalNightDayAmount}
+                    earthCloudsAmount={earthCloudsAmount}
+                    texture={planet.texture}
                     size={planet.size}
-                    key={index}
-                    rings={planet.rings}
                     tilt={planet.tilt}
+                    venusWaterAmount={venusWaterAmount}
+                    marsWaterAmount={marsWaterAmount}
+                    rings={planet.rings}
                   />
                 );
               })}
