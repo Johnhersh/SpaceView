@@ -9,13 +9,13 @@ import planetData from "./infoView-planetData";
 interface InfoViewProps {
   title: string;
   globalNightDayAmount: number;
-  setNightDay: Function;
+  setNightDay: React.Dispatch<React.SetStateAction<number>>;
   earthCloudsAmount: number;
-  setEarthClouds: Function;
+  setEarthClouds: React.Dispatch<React.SetStateAction<number>>;
   venusWaterAmount: number;
-  setVenusWater: Function;
+  setVenusWater: React.Dispatch<React.SetStateAction<number>>;
   marsWaterAmount: number;
-  setMarsWater: Function;
+  setMarsWater: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const InfoView: FunctionComponent<InfoViewProps> = ({
@@ -60,15 +60,9 @@ const InfoView: FunctionComponent<InfoViewProps> = ({
               className="dayNightSlider"
             />
           </div>
-          {title === "Earth" && (
-            <EarthSettings earthCloudsAmount={earthCloudsAmount} setEarthClouds={setEarthClouds} />
-          )}
-          {title === "Venus" && (
-            <WaterSettings venusWaterAmount={venusWaterAmount} setVenusWater={setVenusWater} />
-          )}
-          {title === "Mars" && (
-            <WaterSettings venusWaterAmount={marsWaterAmount} setVenusWater={setMarsWater} />
-          )}
+          {title === "Earth" && <EarthSettings earthCloudsAmount={earthCloudsAmount} setEarthClouds={setEarthClouds} />}
+          {title === "Venus" && <WaterSettings venusWaterAmount={venusWaterAmount} setVenusWater={setVenusWater} />}
+          {title === "Mars" && <WaterSettings venusWaterAmount={marsWaterAmount} setVenusWater={setMarsWater} />}
         </div>
       </div>
     </div>
