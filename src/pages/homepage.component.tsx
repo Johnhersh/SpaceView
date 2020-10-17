@@ -5,7 +5,7 @@ import { softShadows, OrbitControls, Html } from "drei";
 import { useSpring } from "@react-spring/core";
 import { a } from "@react-spring/three";
 
-import NextPrevButton from "../components/next-prevButton.component";
+import NextPrevButton from "../components/navButton.component";
 import InfoView from "../components/infoView.component";
 import PlanetWrapper from "../components/planetWrapper.component";
 

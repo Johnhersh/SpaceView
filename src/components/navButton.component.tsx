@@ -1,14 +1,14 @@
 import React, { FunctionComponent } from "react";
 import Button from "react-bootstrap/Button";
 import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
-import "./next-prevButton.styles.scss";
+import "./navButton.styles.scss";
 
-interface NextPrevButtonProps {
+interface NavButtonProps {
   type: "nextButton" | "previousButton";
   clickFunction(event: React.MouseEvent<HTMLElement, MouseEvent>): void;
 }
 
-const NextPrevButton: FunctionComponent<NextPrevButtonProps> = ({ type, clickFunction }) => {
+const NavButton: FunctionComponent<NavButtonProps> = ({ type, clickFunction }) => {
   return (
     <Button className="nextPrevButton" id={type} variant="primary" onClick={clickFunction}>
       {type === "nextButton" && <FaChevronRight />}
@@ -17,4 +17,4 @@ const NextPrevButton: FunctionComponent<NextPrevButtonProps> = ({ type, clickFun
   );
 };
 
-export default NextPrevButton;
+export default NavButton;
