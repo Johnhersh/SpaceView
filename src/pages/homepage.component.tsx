@@ -7,27 +7,8 @@ import { a } from "@react-spring/three";
 
 import NextPrevButton from "../components/navButton.component";
 import InfoView from "../components/infoView.component";
-import PlanetWrapper from "../components/planetWrapper.component";
-
-import mercuryTexture from "../3d/textures/Mercury_Diffuse.png";
-import venusTexture from "../3d/textures/Venus_Diffuse.png";
-import earthTexture from "../3d/textures/Earth_Diffuse.png";
-import marsTexture from "../3d/textures/Mars_Diffuse.png";
-import jupiterTexture from "../3d/textures/Jupiter_Diffuse.png";
-import saturnTexture from "../3d/textures/Saturn_Diffuse.png";
-import uranusTexture from "../3d/textures/Uranus_Diffuse.png";
-import neptuneTexture from "../3d/textures/Neptune_Diffuse.png";
-
-const solarSystemData = [
-  { name: "Mercury", texture: mercuryTexture, size: 0.5, rings: false, tilt: 2 },
-  { name: "Venus", texture: venusTexture, size: 1, rings: false, tilt: 117 },
-  { name: "Earth", texture: earthTexture, size: 1, rings: false, tilt: 23 },
-  { name: "Mars", texture: marsTexture, size: 0.75, rings: false, tilt: 25 },
-  { name: "Jupiter", texture: jupiterTexture, size: 1.75, rings: false, tilt: 3 },
-  { name: "Saturn", texture: saturnTexture, size: 1.75, rings: true, tilt: 26 },
-  { name: "Uranus", texture: uranusTexture, size: 1.2, rings: false, tilt: 98 },
-  { name: "Neptune", texture: neptuneTexture, size: 1.2, rings: false, tilt: 28 },
-];
+import PlanetsWrapper from "../components/planetWrapper.component";
+import { solarSystemData } from "../solarSystemData";
 
 softShadows({
   frustrum: 3.75, // Frustrum width (default: 3.75)
@@ -109,23 +90,13 @@ function HomePage() {
           </group>
           <a.group position-x={spring}>
             <Suspense fallback={<Html>Loading</Html>}>
-              {solarSystemData.map((planet, index) => {
-                return (
-                  <PlanetWrapper
-                    planetName={planet.name}
-                    index={index}
-                    planetDistance={planetDistance}
-                    globalNightDayAmount={globalNightDayAmount}
-                    earthCloudsAmount={earthCloudsAmount}
-                    texture={planet.texture}
-                    size={planet.size}
-                    tilt={planet.tilt}
-                    venusWaterAmount={venusWaterAmount}
-                    marsWaterAmount={marsWaterAmount}
-                    rings={planet.rings}
-                  />
-                );
-              })}
+              <PlanetsWrapper
+                planetDistance={planetDistance}
+                globalNightDayAmount={globalNightDayAmount}
+                earthCloudsAmount={earthCloudsAmount}
+                venusWaterAmount={venusWaterAmount}
+                marsWaterAmount={marsWaterAmount}
+              />
             </Suspense>
           </a.group>
           <OrbitControls enablePan={false} maxDistance={10} minDistance={2} />
